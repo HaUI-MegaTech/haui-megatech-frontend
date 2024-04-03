@@ -1,0 +1,42 @@
+.container {
+    display         : flex;
+    padding         : 10px 30px;
+    justify-content : space-between;
+    align-items     : center;
+    background-color: #fff;
+}
+
+.main {
+    font-size  : 32px !important;
+    font-weight: 600;
+
+    @media screen and (max-width: 920px) {
+        display: none;
+    }
+}
+
+.phone {
+    display    : flex;
+    gap        : 10px;
+    align-items: center;
+
+    @media screen and (max-width: 1100px) {
+        display: none;
+    }
+
+    .content {
+        display       : flex;
+        flex-direction: column;
+
+        .number {
+            color      : #007aff;
+            font-weight: 700;
+            font-size  : 23px;
+        }
+
+        .text {
+            font-size : 12px;
+            text-align: center;
+        }
+    }
+}
