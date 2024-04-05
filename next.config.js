@@ -2,7 +2,7 @@
 const path = require('path')
 const nextConfig = {
     images: {
-        domains: ['laptop88.vn', 'encrypted-tbn0.gstatic.com'],
+        domains: ['laptop88.vn', 'encrypted-tbn0.gstatic.com', 'variety.com'],
     },
     sassOptions: {
         includePaths: [path.join(__dirname, 'styles')],

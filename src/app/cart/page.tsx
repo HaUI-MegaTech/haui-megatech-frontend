@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import styles from './styles.module.scss'
-import { Space, Table, Tag } from 'antd';
+import { Button, Space, Table, Tag } from 'antd';
 import type { TableProps } from 'antd';
 
 interface DataType {
@@ -91,9 +91,16 @@ const Cart = () => {
             <div className={styles.title}>Giỏ hàng</div>
             <div className={styles.subTitle}>Bạn có 2 sản phẩm trong giỏ hàng</div>
             <div>
-                <Table columns={columns} dataSource={data} style={{overflowX: 'auto'}} />
+                <Table
+                    columns={columns}
+                    dataSource={data}
+                    style={{ overflowX: 'auto' }}
+                    pagination={false}
+                />
             </div>
-
+            <div className={styles.btnOrder}>
+                <button>Mua hàng</button>
+            </div>
         </div>
     )
 }

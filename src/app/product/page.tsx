@@ -2,12 +2,13 @@
 import ProductImages from '@/components/product/image.gallery'
 import React from 'react'
 import styles from "./styles.module.scss"
-import { InputNumber, Rate, Tag } from 'antd'
+import { InputNumber, Progress, Rate, Tag } from 'antd'
 import { CheckCircleTwoTone, DollarTwoTone, HeartOutlined, PlusCircleOutlined, RollbackOutlined } from '@ant-design/icons'
 import TableCPUInfor from '@/components/product/tableCPU.info'
 import TableRAMInfor from '@/components/product/tableRAM.info'
 import TableMonitorInfor from '@/components/product/tableMonitor.info'
 import ListProduct from '@/components/app.products'
+import ReviewCard from '@/components/product/review.card'
 
 const ProductDetail = () => {
   return (
@@ -97,6 +98,54 @@ const ProductDetail = () => {
             <TableRAMInfor />
             <TableMonitorInfor />
           </div>
+        </div>
+      </div>
+      <div className={styles.review}>
+        <div className={styles.titleReview}>
+          Khách hàng đánh giá
+        </div>
+        <div className={styles.overviewContainer}>
+          <p>Tổng quan</p>
+          <div className={styles.rateTotal}>
+            4.4 <Rate className={styles.rateDetail} allowHalf defaultValue={4.5} />
+            <p className={styles.numberOfReviews}>(31 đánh giá)</p>
+          </div>
+          <table className={styles.tableOverview}>
+            <tbody>
+              <tr>
+                <td><Rate className={styles.rateDetail} defaultValue={5}  /></td>
+                <td className={styles.progressCol}><Progress percent={50} showInfo={false} /></td>
+                <td>(336)</td>
+              </tr>
+              <tr>
+                <td><Rate className={styles.rateDetail} defaultValue={5} /></td>
+                <td><Progress percent={50} showInfo={false} /></td>
+                <td>(336)</td>
+              </tr>
+              <tr>
+                <td><Rate className={styles.rateDetail} defaultValue={5} /></td>
+                <td><Progress percent={50} showInfo={false} /></td>
+                <td>(336)</td>
+              </tr>
+              <tr>
+                <td><Rate className={styles.rateDetail} defaultValue={5} /></td>
+                <td><Progress percent={50} showInfo={false} /></td>
+                <td>(336)</td>
+              </tr>
+              <tr>
+                <td><Rate className={styles.rateDetail} defaultValue={5} /></td>
+                <td><Progress percent={50} showInfo={false} /></td>
+                <td>(336)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <ReviewCard />
+          <ReviewCard />
+          <ReviewCard />
+          <ReviewCard />
+          <ReviewCard />
         </div>
       </div>
       <div className={styles.relateProduct}>

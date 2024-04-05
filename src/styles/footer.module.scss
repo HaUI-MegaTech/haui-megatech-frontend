@@ -4,10 +4,9 @@
     flex-wrap      : wrap;
     justify-content: space-between;
     gap            : 20px;
-    text-align     : center;
 
     .col {
-        font-size  : 17px;
+        font-size  : 15px;
         line-height: 35px;
 
         .containerMail {
@@ -19,17 +18,11 @@
             margin     : 20px 0;
             position   : relative;
 
-
-            // .input {
-            //     background-color: #fff;
-
             input {
-                padding: 10px 20px;
+                padding: 10px 30px;
                 border : none;
                 outline: none;
             }
-
-            // }
 
             .icon {
                 padding    : 6px 0px;
@@ -45,4 +38,5 @@
 .develop {
     padding   : 40px 30px;
     text-align: center;
+    border-top: 1px solid rgba(210, 205, 205, 0.611);
 }
