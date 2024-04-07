@@ -4,13 +4,14 @@ import Search from 'antd/es/input/Search';
 import Image from 'next/image';
 import React from 'react'
 import styles from '@/styles/header.module.scss'
+import logo from '../../public/images/logo.png'
 
 const AppHeader = () => {
     return (
         <div className={styles.container}>
             <div className={styles.logo}>
-                <Image src="/images/FPT_Software_logo.png"
-                    width={100} height={50} alt="logo"
+                <Image src={logo}
+                    width={200} height={50} alt="logo"
                     objectFit='cover'
                     sizes='100vw'
                     className={styles.imgLogo}

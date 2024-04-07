@@ -3,13 +3,14 @@ import React from 'react';
 import styles from '@/styles/footer.module.scss'
 import { MailTwoTone } from '@ant-design/icons';
 import Image from 'next/image';
+import logo from '../../public/images/logo.png'
 
 const AppFooter = () => {
     return (
         <div>
             <div className={styles.container}>
                 <div className={styles.col}>
-                    <Image src='/images/FPT_Software_logo.png' alt='' width={150} height={50} />
+                    <Image src={logo} alt='' width={250} height={200} style={{objectFit: 'cover', margin: '0 auto'}}/>
                 </div>
                 <div className={styles.col}>
                     <b>Danh sách thương hiệu</b>
