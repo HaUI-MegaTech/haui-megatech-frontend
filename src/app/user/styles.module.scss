@@ -1,0 +1,82 @@
+.container {
+    display      : flex;
+    gap          : 20px;
+    padding      : 50px 30px;
+
+    .left {
+        width: 20%;
+        background-color: #fff;
+        padding: 20px 30px;
+        border-radius: 20px;
+        .leftTop {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            .avatar {
+                border-radius: 50%;
+                object-fit: cover;
+            }
+            .leftTopRight {
+                color: gray;
+                font-weight: 400;
+                font-style: 15px;
+                .fullName {
+                    color: black;
+                }
+            }
+        }
+        .leftBottom {
+            ul {
+                list-style-type: none;
+                padding-left: 0;
+                margin: 0;
+                li {
+                    padding: 10px 0;
+                    margin: 0;
+                    padding-left: 0;
+                    cursor: pointer;
+                    &:hover {
+                        color: #007aff;
+                        transition: all ease 0.3s;
+                    }
+                }
+            }
+        }
+    }
+    .right {
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 20px;
+        padding: 30px 40px;
+        .basicInfo {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            margin-bottom: 20px;
+            .imageUser {
+                border-radius: 50%;
+                object-fit: cover;
+            }
+            .name {
+                margin-top: 20px;
+                font-size: 23px;
+                font-weight: 500;
+            }
+        }
+        .form {
+            display: flex;
+            justify-content: center;
+            width: 80%;
+            .ant-form-item {
+                text-align: center !important;
+            }
+        }
+    }
+}
