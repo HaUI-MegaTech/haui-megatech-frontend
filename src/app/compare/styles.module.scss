@@ -1,0 +1,33 @@
+.container {
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    .top {
+        display: flex;
+        gap: 50px;
+        justify-content: center;
+        align-items: center;
+        .topLeft {
+            font-size: 20px;
+            font-weight: 500;
+            .title {
+                font-weight: 600;
+                font-size: 20px;
+                color: #007aff;
+                margin-bottom: 20px;
+            }
+        }
+        .topRight {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+    }
+    .bottom {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        gap: 50px;
+    }
+}
