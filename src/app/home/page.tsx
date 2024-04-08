@@ -5,11 +5,11 @@ import React from 'react'
 import Table from 'react-bootstrap/Table';
 
 const HomePage = () => {
-    return (
-        <div>
-            <AppCard />
-        </div>
-    )
+  return (
+    <div>
+      <AppCard />
+    </div>
+  )
 }
 
 export default HomePage

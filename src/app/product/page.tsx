@@ -113,7 +113,7 @@ const ProductDetail = () => {
           <table className={styles.tableOverview}>
             <tbody>
               <tr>
-                <td><Rate className={styles.rateDetail} defaultValue={5}  /></td>
+                <td><Rate className={styles.rateDetail} defaultValue={5} /></td>
                 <td className={styles.progressCol}><Progress percent={50} showInfo={false} /></td>
                 <td>(336)</td>
               </tr>

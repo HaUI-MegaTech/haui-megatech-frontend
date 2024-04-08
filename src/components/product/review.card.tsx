@@ -19,7 +19,7 @@ const ReviewCard = () => {
           <Rate defaultValue={5} className={styles.rateDetail} />
           <span>  Cực kỳ hài lòng</span>
           <div>
-          <Tag icon={<CheckCircleOutlined />} color='success'>Đã mua hàng</Tag>
+            <Tag icon={<CheckCircleOutlined />} color='success'>Đã mua hàng</Tag>
           </div>
         </div>
         <div className={styles.reviewDescription}>

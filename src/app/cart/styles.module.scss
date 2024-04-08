@@ -1,41 +1,41 @@
 .container {
-    background-color: #fff;
-    padding         : 20px 30px;
-    margin          : 30px 0;
-    border-radius   : 20px;
+  background-color: #fff;
+  padding         : 20px 30px;
+  margin          : 30px 0;
+  border-radius   : 20px;
 
-    @media screen and (max-width: 1200px) {
-        margin: 50px 0;
+  @media screen and (max-width: 1200px) {
+    margin: 50px 0;
+  }
+
+  .title {
+    font-size  : 30px;
+    font-weight: 500;
+  }
+
+  .subTitle {
+    font-size: 15px;
+    color    : gray;
+    margin   : 5px 0 20px 0;
+  }
+
+  .btnOrder {
+    text-align: right;
+    margin    : 50px 20px 20px 0;
+
+    button {
+      border          : none;
+      padding         : 10px 20px;
+      background-color: #007aff;
+      opacity         : 0.8;
+      border-radius   : 10px;
+      color           : white;
+
+      &:hover {
+        opacity   : 1;
+        transition: all linear 0.3s;
+      }
     }
 
-    .title {
-        font-size  : 30px;
-        font-weight: 500;
-    }
-
-    .subTitle {
-        font-size: 15px;
-        color    : gray;
-        margin   : 5px 0 20px 0;
-    }
-
-    .btnOrder {
-        text-align: right;
-        margin    : 50px 20px 20px 0;
-
-        button {
-            border          : none;
-            padding         : 10px 20px;
-            background-color: #007aff;
-            opacity         : 0.8;
-            border-radius   : 10px;
-            color           : white;
-
-            &:hover {
-                opacity   : 1;
-                transition: all linear 0.3s;
-            }
-        }
-
-    }
+  }
 }

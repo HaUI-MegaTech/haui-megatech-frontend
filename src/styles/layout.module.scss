@@ -1,12 +1,12 @@
 .layout {
-    padding         : 30px 100px 60px;
-    background-color: rgba(241, 236, 236, 0.5);
+  padding         : 30px 100px 60px;
+  background-color: rgba(241, 236, 236, 0.5);
 
-    @media screen and (max-width: 1200px) {
-        padding: 20px 50px;
-    }
+  @media screen and (max-width: 1200px) {
+    padding: 20px 50px;
+  }
 
-    @media screen and (max-width: 768px) {
-        padding: 20px 20px;
-    }
+  @media screen and (max-width: 768px) {
+    padding: 20px 20px;
+  }
 }

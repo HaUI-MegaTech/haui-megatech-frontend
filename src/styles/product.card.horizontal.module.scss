@@ -1,44 +1,45 @@
 .card {
-    width           : 95%;
-    margin          : 0 auto;
-    background-color: #fff;
-    border-radius   : 20px;
-    padding         : 20px 40px;
-    display         : flex;
-    align-items     : center;
-    gap             : 20px;
-    font-size       : 14px;
+  width           : 100%;
+  background-color: #fff;
+  border-radius   : 20px;
+  padding         : 20px 40px;
+  display         : flex;
+  align-items     : center;
+  gap             : 20px;
+  font-size       : 14px;
+  justify-content : space-between;
+  margin          : 0 auto;
 
-    @media screen and (max-width: 1000px) {
-        font-size: 13px;
-    }
+  @media screen and (max-width: 1000px) {
+    font-size: 13px;
+  }
+
+  @media screen and (max-width: 800px) {
+    flex-direction : column;
+    gap            : 6px;
+    text-align     : left;
+    justify-content: left;
+    padding        : 20px 0px;
+    align-items    : flex-start;
+  }
+
+  .name {
+    width   : 40%;
+    height  : 40px;
+    overflow: hidden;
 
     @media screen and (max-width: 800px) {
-        flex-direction : column;
-        gap            : 6px;
-        text-align     : left;
-        justify-content: left;
-        padding        : 20px 0px;
-        align-items    : flex-start;
+      width : 100%;
+      height: 30px;
     }
 
-    .name {
-        width   : 40%;
-        height  : 40px;
-        overflow: hidden;
+    h1 {
+      font-size: 16px;
 
-        @media screen and (max-width: 800px) {
-            width : 100%;
-            height: 30px;
-        }
-
-        h1 {
-            font-size: 16px;
-
-            @media screen and (max-width: 1000px) {
-                font-size : 13px;
-                text-align: left;
-            }
-        }
+      @media screen and (max-width: 1000px) {
+        font-size : 13px;
+        text-align: left;
+      }
     }
+  }
 }
