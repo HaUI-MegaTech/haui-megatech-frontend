@@ -6,7 +6,7 @@ const OrderHistory = () => {
   return (
     <div className={styles.container}>
       <div>Lịch sử đơn hàng</div>
-      <div>
+      <div className={styles.products}>
         <ProductCardHorizontal />
         <ProductCardHorizontal />
         <ProductCardHorizontal />
