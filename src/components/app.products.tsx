@@ -1,12 +1,29 @@
+'use client'
 import AppCard from '@/components/app.card'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '@/styles/products.module.scss'
 import { Menu, MenuProps } from 'antd'
 import { Baloo_2 } from 'next/font/google'
+import { useSearchParams } from 'next/navigation'
 const baloo = Baloo_2({
 	weight: ['400', '600'],
 	subsets: ["vietnamese"],
 })
+interface Product {
+	bannerImg: string,
+	battery: string,
+	card: string,
+	discountPercent: string,
+	display: string,
+	id: number,
+	name: string,
+	newPrice: number,
+	oldPrice: number,
+	processor: string,
+	ram: number,
+	storage: string,
+	weight: number,
+}
 
 const items: MenuProps['items'] = [
 	{
@@ -42,6 +59,16 @@ const items: MenuProps['items'] = [
 ];
 
 const ListProduct = () => {
+	const [listProduct, setListProduct] = useState<Product[]>([]);
+	const fetchData = async () => {
+		const res = await fetch("http://localhost:8080/api/v1/products");
+		const data = await res.json();
+		console.log(data.items);
+		setListProduct(data.items);
+	}
+	useEffect(() => {
+		fetchData();
+	}, [])
 	return (
 		<div className={styles.container}>
 			<div className={styles.header}>
@@ -57,12 +84,13 @@ const ListProduct = () => {
 				</div>
 			</div>
 			<div className={styles.listProduct}>
-				<AppCard />
-				<AppCard />
-				<AppCard />
-				<AppCard />
-				<AppCard />
-				<AppCard />
+				{
+					listProduct?.map((item) => {
+						return (
+							<AppCard key={item.id} product={item} />
+						)
+					})
+				}
 			</div>
 		</div>
 	)

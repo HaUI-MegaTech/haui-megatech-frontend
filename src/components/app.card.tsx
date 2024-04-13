@@ -2,13 +2,28 @@
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import styles from '@/styles/card.module.scss'
+interface Product {
+	bannerImg: string,
+	battery: string,
+	card: string,
+	discountPercent: string,
+	display: string,
+	id: number,
+	name: string,
+	newPrice: number,
+	oldPrice: number,
+	processor: string,
+	ram: number,
+	storage: string,
+	weight: number,
+}
 
-const AppCard = () => {
+const AppCard = ({ product }: { product: Product }) => {
   return (
     <div className={styles.container}>
       <div className={styles.image}>
         <Image
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWS5WosKs79XqVWqqKINh3jLiS_qLy49PIlg&usqp=CAU"
+          src={product.bannerImg}
           alt="image"
           width={0}
           height={0}
@@ -18,41 +33,41 @@ const AppCard = () => {
       </div>
       <div className='product-info'>
         <div className={styles.title}>
-          [New 100%] Laptop Lenovo LOQ 15IAX9 83GS000FVN - Intel Core i5-12450HX | RTX 2
+          {product.name}
         </div>
         <div className='product-promotion'>
           <table className={styles.table}>
             <tbody>
               <tr>
                 <td width={50}>CPU</td>
-                <td>i5 - 1240P</td>
+                <td>{product.processor}</td>
               </tr>
               <tr>
                 <td>RAM</td>
-                <td>AMD R7-6800H</td>
+                <td>{product.ram}</td>
               </tr>
               <tr>
                 <td>Ổ cứng</td>
-                <td>SSD 512GB NVMe</td>
+                <td>{product.processor}</td>
               </tr>
               <tr>
                 <td>Card</td>
-                <td>Intel Iris Xe Graphics</td>
+                <td>{product.card}</td>
               </tr>
               <tr>
                 <td>M.hình</td>
-                <td>14" 2.2K</td>
+                <td>{product.display}</td>
               </tr>
             </tbody>
           </table>
         </div>
         <div className={styles.price}>
           <div className={styles.top}>
-            <del className={styles.oldPrice}>25.000.000đ</del>
-            <span className={styles.sale}>-29%</span>
+            <del className={styles.oldPrice}>{product.oldPrice}đ</del>
+            <span className={styles.sale}>-{product.discountPercent}%</span>
           </div>
           <div className={styles.bottom}>
-            <span className={styles.priceMain}>19.000.000đ</span>
+            <span className={styles.priceMain}>{product.newPrice}đ</span>
           </div>
         </div>
       </div>
