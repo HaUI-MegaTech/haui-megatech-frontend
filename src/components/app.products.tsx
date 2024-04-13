@@ -24,7 +24,9 @@ interface Product {
 	storage: string,
 	weight: number,
 }
-
+interface ListProductProps {
+  listProduct: Product[];
+}
 const items: MenuProps['items'] = [
 	{
 		label: (
@@ -58,17 +60,7 @@ const items: MenuProps['items'] = [
 	},
 ];
 
-const ListProduct = () => {
-	const [listProduct, setListProduct] = useState<Product[]>([]);
-	const fetchData = async () => {
-		const res = await fetch("http://localhost:8080/api/v1/products");
-		const data = await res.json();
-		console.log(data.items);
-		setListProduct(data.items);
-	}
-	useEffect(() => {
-		fetchData();
-	}, [])
+const ListProduct : React.FC<ListProductProps> = ({ listProduct }) => {
 	return (
 		<div className={styles.container}>
 			<div className={styles.header}>
