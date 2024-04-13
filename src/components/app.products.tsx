@@ -25,7 +25,8 @@ interface Product {
 	weight: number,
 }
 interface ListProductProps {
-  listProduct: Product[];
+  listProduct: Product[],
+	title: string
 }
 const items: MenuProps['items'] = [
 	{
@@ -60,11 +61,11 @@ const items: MenuProps['items'] = [
 	},
 ];
 
-const ListProduct : React.FC<ListProductProps> = ({ listProduct }) => {
+const ListProduct : React.FC<ListProductProps> = ({ listProduct, title }) => {
 	return (
 		<div className={styles.container}>
 			<div className={styles.header}>
-				<span className={styles.title}>SẢN PHẨM NỔI BẬT</span>
+				<span className={styles.title}>{title}</span>
 				<div className={styles.menu}>
 					<Menu
 						className={baloo.className}

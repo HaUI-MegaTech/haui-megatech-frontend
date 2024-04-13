@@ -47,8 +47,8 @@ const AppCard = ({ product }: { product: Product }) => {
                 <td>{product.ram}</td>
               </tr>
               <tr>
-                <td>Ổ cứng</td>
-                <td>{product.processor}</td>
+                <td>Bộ nhớ</td>
+                <td>{product.storage}</td>
               </tr>
               <tr>
                 <td>Card</td>

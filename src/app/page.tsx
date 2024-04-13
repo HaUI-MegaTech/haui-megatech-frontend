@@ -65,11 +65,11 @@ export default function Home() {
   return (
     <div>
       <Banner />
-      <ListProduct listProduct={listProduct1}/>
-      <ListProduct listProduct={listProduct2}/>
-      <ListProduct listProduct={listProduct3}/>
-      <ListProduct listProduct={listProduct4}/>
-      <ListProduct listProduct={listProduct5}/>
+      <ListProduct listProduct={listProduct1} title="SẢN PHẨM NỔI BẬT"/>
+      <ListProduct listProduct={listProduct2} title="SẢN PHẨM MUA NHIỀU" />
+      <ListProduct listProduct={listProduct3} title="SẢN PHẨM SALE MẠNH"/>
+      <ListProduct listProduct={listProduct4} title="SẢN PHẨM GIÁ HỜI"/>
+      <ListProduct listProduct={listProduct5} title="SẢN PHẨM KÈM QUÀ TẶNG"/>
     </div>
   )
 }
