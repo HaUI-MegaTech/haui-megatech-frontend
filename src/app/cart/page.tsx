@@ -3,6 +3,7 @@ import React from 'react'
 import styles from './styles.module.scss'
 import { Button, Space, Table, Tag } from 'antd';
 import type { TableProps } from 'antd';
+import Link from 'next/link';
 
 interface DataType {
   key: string;
@@ -99,7 +100,7 @@ const Cart = () => {
         />
       </div>
       <div className={styles.btnOrder}>
-        <button>Mua hàng</button>
+        <button><Link href="/order">Mua hàng</Link></button>
       </div>
     </div>
   )

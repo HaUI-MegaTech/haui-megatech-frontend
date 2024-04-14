@@ -1,9 +1,24 @@
 'use client'
 import { Button, Checkbox, Col, Divider, Form, InputNumber, Pagination, Rate, Row, Spin, Tabs } from 'antd'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss'
 import { ReloadOutlined } from '@ant-design/icons';
 import AppCard from '@/components/app.card';
+interface Product {
+  bannerImg: string,
+  battery: string,
+  card: string,
+  discountPercent: string,
+  display: string,
+  id: number,
+  name: string,
+  newPrice: number,
+  oldPrice: number,
+  processor: string,
+  ram: number,
+  storage: string,
+  weight: number,
+}
 const SearchPage = () => {
   const items = [
     {
@@ -23,6 +38,16 @@ const SearchPage = () => {
       label: 'Giá cao đến thấp',
     },
   ];
+  const [listProduct1, setListProduct1] = useState<Product[]>([]);
+  const fetchData1 = async () => {
+    const res = await fetch("http://localhost:8080/api/v1/products?pageIndex=1");
+    const data = await res.json();
+    console.log(data.items);
+    setListProduct1(data.items);
+  }
+  useEffect(() => {
+    fetchData1();
+  }, [])
   return (
     <div className={styles.container}>
       <div className={styles.main}>
@@ -44,13 +69,13 @@ const SearchPage = () => {
               <Checkbox.Group>
                 <Row>
                   <Col span={24}>
-                    <Checkbox>banh da</Checkbox>
+                    <Checkbox value={1}>Acer</Checkbox>
                   </Col>
                   <Col span={24}>
-                    <Checkbox>banh da</Checkbox>
+                    <Checkbox value={2}>Dell</Checkbox>
                   </Col>
                   <Col span={24}>
-                    <Checkbox>banh da</Checkbox>
+                    <Checkbox value={3}>Macbook</Checkbox>
                   </Col>
                 </Row>
               </Checkbox.Group>
@@ -93,22 +118,13 @@ const SearchPage = () => {
             <div className={styles.bookDisplay}>
               <Tabs defaultActiveKey="1" items={items} />
               <div className={styles.listBook}>
-                <AppCard />
-                <AppCard />
-                <AppCard />
-                <AppCard />
-                <AppCard />
-                <AppCard />
-                <AppCard />
-                <AppCard />
-                <AppCard />
-                <AppCard />
-                <AppCard />
-                <AppCard />
-                <AppCard />
-                <AppCard />
-                <AppCard />
-                <AppCard />
+                {
+                  listProduct1?.map((item) => {
+                    return (
+                      <AppCard key={item.id} product={item} />
+                    )
+                  })
+                }
               </div>
               <div className={styles.pagination}>
                 <Pagination total={50} current={1} pageSize={15} />

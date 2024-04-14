@@ -69,11 +69,17 @@
       border-radius: 10px;
       border       : none;
       padding      : 10px 20px;
-
+      a {
+        text-decoration: none;
+        color: black;
+      }
       &:hover {
         background-color: #007aff;
         color           : white;
         transition      : all ease 0.3s;
+        a {
+          color: white;
+        }
       }
     }
   }

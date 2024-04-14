@@ -4,6 +4,7 @@ import { Input } from 'antd'
 import { EnvironmentTwoTone } from '@ant-design/icons'
 import ProductCardHorizontal from '@/components/product/product.card.horizontal'
 import styles from './styles.module.scss'
+import Link from 'next/link'
 
 const OrderPage = () => {
   return (
@@ -64,7 +65,7 @@ const OrderPage = () => {
           <div>Tổng thanh toán: <span className={styles.total}>123.000đ</span></div>
         </div>
         <div className={styles.btnOrder}>
-          <button>Đặt hàng</button>
+          <button><Link href="/order-success">Đặt hàng</Link></button>
         </div>
       </div>
     </>

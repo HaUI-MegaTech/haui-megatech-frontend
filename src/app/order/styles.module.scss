@@ -192,7 +192,10 @@
 
   .btnOrder {
     text-align: right;
-
+    a {
+      text-decoration: none;
+      color: white;
+    }
     button {
       border          : none;
       background-color: #007aff;
