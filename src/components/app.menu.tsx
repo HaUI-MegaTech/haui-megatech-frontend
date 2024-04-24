@@ -1,89 +1,53 @@
-import React from 'react'
-import { AppstoreOutlined, BarsOutlined, DownOutlined, MailOutlined, PhoneOutlined, SettingOutlined } from '@ant-design/icons';
+import React, { useEffect, useState } from 'react'
+import { BarsOutlined, PhoneOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Dropdown, Menu, Space } from 'antd';
 import styles from '@/styles/menu.module.scss'
 import { Baloo_2 } from 'next/font/google';
+import handleProducts from '@/api/user.request';
 
 const baloo = Baloo_2({
 	weight: ['400', '500', '600', '700'],
 	subsets: ["vietnamese"],
 })
 
-const items: MenuProps['items'] = [
-	{
-		label: (
-			<span style={{ padding: '20px 0' }}>Macbook</span>
-		),
-		key: '1',
-	},
-	{
-		label: (
-			<span>Asus</span>
-		),
-		key: '2',
-		children: [
-			{
-				label: (
-					<span>Asus Series</span>
-				),
-				key: '11',
-			},
-			{
-				label: (
-					<span>Asus Gaming</span>
-				),
-				key: '12',
-			},
-			{
-				label: (
-					<span>Asus Văn phòng</span>
-				),
-				key: '13',
-			},
-		]
-	},
-	{
-		label: (
-			<span>Dell</span>
-		),
-		key: '3',
-	},
-	{
-		label: (
-			<span>Acer</span>
-		),
-		key: '4',
-	},
-	{
-		label: (
-			<span>Think book</span>
-		),
-		key: '5',
-		children: [
-			{
-				label: (
-					<span>Asus Series</span>
-				),
-				key: '51',
-			},
-			{
-				label: (
-					<span>Asus Gaming</span>
-				),
-				key: '52',
-			},
-			{
-				label: (
-					<span>Asus Văn phòng</span>
-				),
-				key: '53',
-			},
-		]
-	},
-];
-
+interface ListBrand {
+	key: string,
+	label: string,
+}
+interface Brand {
+	id: string,
+	name: string,
+	image: string
+}
 const MenuCategories = () => {
+	const [listBrand, setListBrand] = useState<ListBrand[]>([]);
+	const handleGetListBrands = async () => {
+		try {
+			let res: any = await handleProducts.getListBrands();
+			if (res) {
+				let arr = res.items;
+				const brands = arr.map((item: Brand) => {
+					return ({
+						key: item.id,
+						label: (
+							<span style={{ padding: '20px 0' }}> {item.name}</span >
+						)
+					})
+				})
+				setListBrand(brands);
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
+	useEffect(() => {
+		handleGetListBrands();
+	}, [])
+
+	const items: MenuProps['items'] = listBrand.slice(0, 5);
+	
 	return (
 		<div className={styles.container}>
 			<div className='dropDown'>
