@@ -4,16 +4,20 @@ import styles from './styles.module.scss'
 import { Form, type FormProps, Input } from 'antd';
 import Image from 'next/image';
 import imageLogin from '../../../public/images/login-register.jpg';
+import handleAuth from '@/api/auth.request';
 
 type FieldType = {
   username?: string;
-  email?: string;
   password?: string;
-  re_password?: string;
-  remember?: string;
 };
-const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
+const onFinish: FormProps<FieldType>["onFinish"] = async (values: object) => {
   console.log('Success:', values);
+  try {
+    let res = await handleAuth.login(values);
+    if (res) console.log(res);
+  } catch (err) {
+    console.log(err);
+  };
 };
 
 const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {

@@ -4,16 +4,23 @@ import styles from './styles.module.scss'
 import { Form, type FormProps, Input } from 'antd';
 import Image from 'next/image';
 import imageLogin from '../../../public/images/login-register.jpg';
+import handleAuth from '@/api/auth.request';
 
 type FieldType = {
   username?: string;
-  email?: string;
+  firstName?: string;
+  lastName?: string;
   password?: string;
   re_password?: string;
-  remember?: string;
 };
-const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
+const onFinish: FormProps<FieldType>["onFinish"] = async (values: object) => {
   console.log('Success:', values);
+  try {
+    let res = await handleAuth.registerAccount(values);
+    if (res) console.log(res);
+  } catch (err) {
+    console.log(err);
+  };
 };
 
 const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
@@ -35,18 +42,26 @@ const RegisterPage = () => {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
+          
+          <Form.Item<FieldType>
+            label="First name"
+            name="firstName"
+            rules={[{ required: true, message: 'Nhập email!' }]}
+          >
+            <Input />
+          </Form.Item>
+          
+          <Form.Item<FieldType>
+            label="Last name"
+            name="lastName"
+            rules={[{ required: true, message: 'Nhập email!' }]}
+          >
+            <Input />
+          </Form.Item>
           <Form.Item<FieldType>
             label="Tên đăng nhập"
             name="username"
             rules={[{ required: true, message: 'Nhập tên đăng nhập!' }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item<FieldType>
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: 'Nhập email!' }]}
           >
             <Input />
           </Form.Item>
