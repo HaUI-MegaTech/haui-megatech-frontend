@@ -63,11 +63,11 @@ const AppCard = ({ product }: { product: Product }) => {
         </div>
         <div className={styles.price}>
           <div className={styles.top}>
-            <del className={styles.oldPrice}>{product.oldPrice}đ</del>
+            <del className={styles.oldPrice}>{(new Intl.NumberFormat('vi-VN').format(product.oldPrice))}đ</del>
             <span className={styles.sale}>-{product.discountPercent}%</span>
           </div>
           <div className={styles.bottom}>
-            <span className={styles.priceMain}>{product.newPrice}đ</span>
+            <span className={styles.priceMain}>{(new Intl.NumberFormat('vi-VN').format(product.newPrice))}đ</span>
           </div>
         </div>
       </div>
