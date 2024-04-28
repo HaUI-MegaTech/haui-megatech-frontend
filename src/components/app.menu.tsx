@@ -5,21 +5,13 @@ import { Dropdown, Menu, Space } from 'antd';
 import styles from '@/styles/menu.module.scss'
 import { Baloo_2 } from 'next/font/google';
 import handleProducts from '@/api/user.request';
+import { Brand, ListBrand } from '@/types/property.types';
 
 const baloo = Baloo_2({
 	weight: ['400', '500', '600', '700'],
 	subsets: ["vietnamese"],
 })
 
-interface ListBrand {
-	key: string,
-	label: string,
-}
-interface Brand {
-	id: string,
-	name: string,
-	image: string
-}
 const MenuCategories = () => {
 	const [listBrand, setListBrand] = useState<ListBrand[]>([]);
 	const handleGetListBrands = async () => {

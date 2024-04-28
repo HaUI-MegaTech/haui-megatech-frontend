@@ -9,31 +9,27 @@ import TableRAMInfor from '@/components/product/tableRAM.info'
 import TableMonitorInfor from '@/components/product/tableMonitor.info'
 import ListProduct from '@/components/app.products'
 import ReviewCard from '@/components/product/review.card'
-interface Product {
-  bannerImg: string,
-  battery: string,
-  card: string,
-  discountPercent: string,
-  display: string,
-  id: number,
-  name: string,
-  newPrice: number,
-  oldPrice: number,
-  processor: string,
-  ram: number,
-  storage: string,
-  weight: number,
-}
+import handleProducts from '@/api/user.request'
+import { Product } from '@/types/property.types'
+
 const ProductDetail = () => {
   const [listProduct1, setListProduct1] = useState<Product[]>([]);
-  const fetchData1 = async () => {
-    const res = await fetch("http://localhost:8080/api/v1/products?pageIndex=1");
-    const data = await res.json();
-    console.log(data.items);
-    setListProduct1(data.items);
-  }
+  const getAllProducts = async () => {
+    try {
+      const res: any = await handleProducts.getProducts();
+      const res1: any = await handleProducts.getProductById('1');
+      if (res) {
+        setListProduct1(res.items);
+        console.log(res1);
+      } else {
+        console.log(`There was an error not found response`);
+      }
+    } catch (error) {
+      console.log(`There was an error ${error}`);
+    }
+  };
   useEffect(() => {
-    fetchData1();
+    getAllProducts();
   }, [])
   return (
     <>
@@ -173,7 +169,7 @@ const ProductDetail = () => {
         </div>
       </div>
       <div className={styles.relateProduct}>
-        <ListProduct listProduct={listProduct1} title="SẢN PHẨM LIÊN QUAN"/>
+        <ListProduct listProduct={listProduct1} title="SẢN PHẨM LIÊN QUAN" />
       </div>
     </>
   )

@@ -2,22 +2,8 @@
 import Banner from '@/components/app.slider';
 import ListProduct from '@/components/app.products';
 import { useEffect, useState } from 'react';
-
-interface Product {
-	bannerImg: string,
-	battery: string,
-	card: string,
-	discountPercent: string,
-	display: string,
-	id: number,
-	name: string,
-	newPrice: number,
-	oldPrice: number,
-	processor: string,
-	ram: number,
-	storage: string,
-	weight: number,
-}
+import handleProducts from '@/api/user.request';
+import { Product } from '@/types/property.types';
 
 export default function Home() {
   const [listProduct1, setListProduct1] = useState<Product[]>([]);
@@ -26,34 +12,44 @@ export default function Home() {
   const [listProduct4, setListProduct4] = useState<Product[]>([]);
   const [listProduct5, setListProduct5] = useState<Product[]>([]);
 	const fetchData1 = async () => {
-		const res = await fetch("http://localhost:8080/api/v1/products?pageIndex=1");
-		const data = await res.json();
-		console.log(data.items);
-		setListProduct1(data.items);
+		try {
+			let res = await handleProducts.getProductsByBrandId("1");
+			if (res && res.items) setListProduct1(res.items);
+		} catch (err) {
+			console.log(err);
+		}
 	}
   const fetchData2 = async () => {
-		const res = await fetch("http://localhost:8080/api/v1/products?pageIndex=2");
-		const data = await res.json();
-		console.log(data.items);
-		setListProduct2(data.items);
+		try {
+			let res = await handleProducts.getProductsByBrandId("2");
+			if (res && res.items) setListProduct2(res.items);
+		} catch (err) {
+			console.log(err);
+		}
 	}
   const fetchData3 = async () => {
-		const res = await fetch("http://localhost:8080/api/v1/products?pageIndex=3");
-		const data = await res.json();
-		console.log(data.items);
-		setListProduct3(data.items);
+		try {
+			let res = await handleProducts.getProductsByBrandId("3");
+			if (res && res.items) setListProduct3(res.items);
+		} catch (err) {
+			console.log(err);
+		}
 	}
   const fetchData4 = async () => {
-		const res = await fetch("http://localhost:8080/api/v1/products?pageIndex=4");
-		const data = await res.json();
-		console.log(data.items);
-		setListProduct4(data.items);
+		try {
+			let res = await handleProducts.getProductsByBrandId("4");
+			if (res && res.items) setListProduct4(res.items);
+		} catch (err) {
+			console.log(err);
+		}
 	}
   const fetchData5 = async () => {
-		const res = await fetch("http://localhost:8080/api/v1/products?pageIndex=5");
-		const data = await res.json();
-		console.log(data.items);
-		setListProduct5(data.items);
+		try {
+			let res = await handleProducts.getProductsByBrandId("5");
+			if (res && res.items) setListProduct5(res.items);
+		} catch (err) {
+			console.log(err);
+		}
 	}
 	useEffect(() => {
 		fetchData1();

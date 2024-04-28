@@ -4,21 +4,8 @@ import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss'
 import { ReloadOutlined } from '@ant-design/icons';
 import AppCard from '@/components/app.card';
-interface Product {
-  bannerImg: string,
-  battery: string,
-  card: string,
-  discountPercent: string,
-  display: string,
-  id: number,
-  name: string,
-  newPrice: number,
-  oldPrice: number,
-  processor: string,
-  ram: number,
-  storage: string,
-  weight: number,
-}
+import { Product } from '@/types/property.types';
+
 const SearchPage = () => {
   const items = [
     {

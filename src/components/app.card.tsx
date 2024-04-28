@@ -2,28 +2,14 @@
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import styles from '@/styles/card.module.scss'
-interface Product {
-	bannerImg: string,
-	battery: string,
-	card: string,
-	discountPercent: string,
-	display: string,
-	id: number,
-	name: string,
-	newPrice: number,
-	oldPrice: number,
-	processor: string,
-	ram: number,
-	storage: string,
-	weight: number,
-}
+import { Product } from '@/types/property.types'
 
 const AppCard = ({ product }: { product: Product }) => {
   return (
     <div className={styles.container}>
       <div className={styles.image}>
         <Image
-          src={product.bannerImg}
+          src={product.mainImg}
           alt="image"
           width={0}
           height={0}
