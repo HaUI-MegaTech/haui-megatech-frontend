@@ -1,8 +1,9 @@
 .main {
 	display: flex;
 	gap    : 30px;
-
-
+	a {
+		text-decoration: none;
+	}
 }
 
 .titleMenu {
