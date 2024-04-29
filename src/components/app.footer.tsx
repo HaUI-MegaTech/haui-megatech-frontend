@@ -1,11 +1,29 @@
 import { Col, Row } from 'antd'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '@/styles/footer.module.scss'
 import { MailTwoTone } from '@ant-design/icons';
 import Image from 'next/image';
 import logo from '../../public/images/logo.png'
+import Link from 'next/link';
+import handleProducts from '@/api/user.request';
+import { ListBrand } from '@/types/property.types';
 
 const AppFooter = () => {
+  const [listBrand, setListBrand] = useState<ListBrand[]>([]);
+  const handleGetListBrands = async () => {
+    try {
+      let res: any = await handleProducts.getListBrands();
+      if (res) {
+        setListBrand(res.items);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    handleGetListBrands();
+  }, [])
   return (
     <div>
       <div className={styles.container}>
@@ -14,19 +32,15 @@ const AppFooter = () => {
         </div>
         <div className={styles.col}>
           <b>Danh sách thương hiệu</b>
-          <div>Laptop Asus</div>
-          <div>Laptop Dell</div>
-          <div>Laptop Asus</div>
-          <div>Laptop Asus</div>
-          <div>Laptop Asus</div>
+          {listBrand?.map((item) =>
+            <Link key={item.id} href={`/search/${item.id}`}><div>Laptop {item.name}</div></Link>
+          )}
         </div>
         <div className={styles.col}>
           <b>Danh sách thương hiệu</b>
-          <div>Laptop Asus</div>
-          <div>Laptop Dell</div>
-          <div>Laptop Asus</div>
-          <div>Laptop Asus</div>
-          <div>Laptop Asus</div>
+          {listBrand?.map((item) =>
+            <Link key={item.id} href={`/search/${item.id}`}><div>Laptop {item.name}</div></Link>
+          )}
         </div>
         <div className={styles.col}>
           <b>Đăng ký nhận tin khuyến mãi</b>

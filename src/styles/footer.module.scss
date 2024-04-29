@@ -1,43 +1,47 @@
 .container {
-  padding        : 50px 30px;
-  display        : flex;
-  flex-wrap      : wrap;
+  padding: 50px 30px;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap            : 20px;
+  gap: 20px;
 
+  a {
+    text-decoration: none;
+  }
+  
   .col {
-    font-size  : 15px;
+    font-size: 15px;
     line-height: 35px;
-    margin     : 0 auto;
+    margin: 0 auto;
 
     .containerMail {
-      display    : flex;
+      display: flex;
       align-items: center;
-      padding    : 0 10px;
-      box-shadow : rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-      width      : 100%;
-      margin     : 20px 0;
-      position   : relative;
+      padding: 0 10px;
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      width: 100%;
+      margin: 20px 0;
+      position: relative;
 
       input {
         padding: 10px 30px;
-        border : none;
+        border: none;
         outline: none;
       }
 
       .icon {
-        padding    : 6px 0px;
+        padding: 6px 0px;
         border-left: 0;
-        cursor     : pointer;
-        position   : absolute;
-        right      : 20px;
+        cursor: pointer;
+        position: absolute;
+        right: 20px;
       }
     }
   }
 }
 
 .develop {
-  padding   : 40px 30px;
+  padding: 40px 30px;
   text-align: center;
   border-top: 1px solid rgba(210, 205, 205, 0.611);
 }

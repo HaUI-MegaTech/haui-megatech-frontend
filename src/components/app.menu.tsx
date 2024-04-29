@@ -6,6 +6,7 @@ import styles from '@/styles/menu.module.scss'
 import { Baloo_2 } from 'next/font/google';
 import handleProducts from '@/api/user.request';
 import { Brand, ListBrand } from '@/types/property.types';
+import Link from 'next/link';
 
 const baloo = Baloo_2({
 	weight: ['400', '500', '600', '700'],
@@ -23,7 +24,7 @@ const MenuCategories = () => {
 					return ({
 						key: item.id,
 						label: (
-							<span style={{ padding: '20px 0' }}> {item.name}</span >
+							<Link href={`/search?brand=${item.id}`}><span style={{ padding: '20px 0' }}> {item.name}</span ></Link>
 						)
 					})
 				})
@@ -39,7 +40,7 @@ const MenuCategories = () => {
 	}, [])
 
 	const items: MenuProps['items'] = listBrand.slice(0, 5);
-	
+
 	return (
 		<div className={styles.container}>
 			<div className='dropDown'>
@@ -68,7 +69,9 @@ const MenuCategories = () => {
 					style={{ fontSize: '17px', gap: '18px' }}
 					// onClick={onClick} 
 					// selectedKeys={[current]} 
-					mode="horizontal" items={items} />
+					mode="horizontal"
+					items={items}
+				/>
 			</div>
 			<div className={styles.phone}>
 				<PhoneOutlined style={{ fontSize: '30px' }} />
