@@ -1,12 +1,17 @@
 import { HeartOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Badge, Input } from 'antd';
 import Image from 'next/image';
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from '@/styles/header.module.scss'
 import logo from '../../public/images/logo.png'
 import Link from 'next/link';
+import { useProductCompareStore } from '@/store/store';
 
 const AppHeader = () => {
+  const productsCompare = useProductCompareStore(state => state.products);
+  useEffect(() => {
+    useProductCompareStore.persist.rehydrate()
+  }, [])
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
@@ -41,7 +46,7 @@ const AppHeader = () => {
         </div>
         <div className={styles.cart}>
           <Link href="/compare">
-            <Badge count={5} style={{ background: '#007aff' }}>
+            <Badge count={productsCompare?.length} style={{ background: '#007aff' }}>
               <HeartOutlined style={{ fontSize: '30px' }} />
             </Badge>
             <span>So sánh</span>
