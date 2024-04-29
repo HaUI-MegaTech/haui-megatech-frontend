@@ -33,13 +33,13 @@ const AppFooter = () => {
         <div className={styles.col}>
           <b>Danh sách thương hiệu</b>
           {listBrand?.map((item) =>
-            <Link key={item.id} href={`/search/${item.id}`}><div>Laptop {item.name}</div></Link>
+            <Link key={item.id} href={`/search?brand${item.id}`}><div>Laptop {item.name}</div></Link>
           )}
         </div>
         <div className={styles.col}>
           <b>Danh sách thương hiệu</b>
           {listBrand?.map((item) =>
-            <Link key={item.id} href={`/search/${item.id}`}><div>Laptop {item.name}</div></Link>
+            <Link key={item.id} href={`/search?brand=${item.id}`}><div>Laptop {item.name}</div></Link>
           )}
         </div>
         <div className={styles.col}>
