@@ -2,9 +2,10 @@
 import { Button, Checkbox, Col, Divider, Form, InputNumber, Pagination, Rate, Row, Spin, Tabs } from 'antd'
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss'
-import { ReloadOutlined } from '@ant-design/icons';
 import AppCard from '@/components/app.card';
 import { Product } from '@/types/property.types';
+import handleProducts from '@/api/user.request';
+import { useSearchParams } from 'next/navigation';
 
 const SearchPage = () => {
   const items = [
@@ -26,15 +27,30 @@ const SearchPage = () => {
     },
   ];
   const [listProduct1, setListProduct1] = useState<Product[]>([]);
-  const fetchData1 = async () => {
-    const res = await fetch("http://localhost:8080/api/v1/products?pageIndex=1");
-    const data = await res.json();
-    console.log(data.items);
-    setListProduct1(data.items);
+  const [query, setQuery] = useState<string>();
+  const [pageIndex, setPageIndex] = useState(0);
+  const [pageSize, setPageSize] = useState(16);
+  const [totalItem, setTotalItem] = useState(10);
+  const searchParams = useSearchParams();
+  const brandId: string | any = searchParams.get('brand');
+  const handleGetProducts = async () => {
+    try {
+      const searchQuery = `${brandId}?pageIndex=${pageIndex}&pageSize=${pageSize}`;
+      const res = await handleProducts.getProductsByBrandId(searchQuery);
+      if (res) {
+        setListProduct1(res.items);
+        setTotalItem(res.totalItems);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const changePageIndex = (pageIndex: number) => {
+    setPageIndex(+pageIndex-1)
   }
   useEffect(() => {
-    fetchData1();
-  }, [])
+    handleGetProducts();
+  }, [searchParams, pageIndex, pageSize])
   return (
     <div className={styles.container}>
       <div className={styles.main}>
@@ -44,11 +60,6 @@ const SearchPage = () => {
           >
             <div className={styles.titleMenu}>
               Bộ lọc tìm kiếm
-              {/* <Button
-                                type="ghost"
-                            >
-                                <ReloadOutlined />
-                            </Button> */}
             </div>
             <Form.Item
               name="category"
@@ -114,7 +125,9 @@ const SearchPage = () => {
                 }
               </div>
               <div className={styles.pagination}>
-                <Pagination total={50} current={1} pageSize={15} />
+                <Pagination
+                  onChange={changePageIndex}
+                  total={totalItem} current={+pageIndex + 1} pageSize={pageSize} />
               </div>
             </div>
           </Spin>
