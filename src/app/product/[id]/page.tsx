@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 'use client'
 import handleProducts from '@/api/user.request';
 import ListProduct from '@/components/app.products';
@@ -11,6 +12,7 @@ import { CheckCircleTwoTone, DollarTwoTone, HeartOutlined, PlusCircleOutlined, R
 import TableCPUInfor from '@/components/product/tableCPU.info'
 import TableRAMInfor from '@/components/product/tableRAM.info'
 import TableMonitorInfor from '@/components/product/tableMonitor.info'
+import { useProductCompareStore } from '@/store/store';
 
 const ProductDetailPage = ({ params }: { params: { id: string } }) => {
   const [productInfo, setProductInfo] = useState<ProductDetail>();
@@ -46,12 +48,25 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
     handleGetDetailProduct();
     getAllProducts();
   }, [])
+  const addProductCompare = useProductCompareStore(state => state.addProductToCompare);
+  const productList = useProductCompareStore(state => state.products);
+  // console.log('before', productListCompare);
+  const [listCompare, setListCompare] = useState<ProductDetail[]>();
 
+  const handleAddToCompareList = () => {
+    console.log(productInfo);
+    if (productInfo) {
+      addProductCompare(productInfo);
+    }
+  }
+  useEffect(() => {
+    useProductCompareStore.persist.rehydrate()
+  }, [])
   return (
     <div>
       <div className={styles.inforTop}>
         <div className={styles.image}>
-          {arrImg && <ProductImages images={arrImg}/>}
+          {arrImg && <ProductImages images={arrImg} />}
         </div>
         <div className={styles.content}>
           <div className={styles.contentTop}>
@@ -77,11 +92,9 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
                 <button className={styles.buy}>Mua Ngay</button>
               </div>
             </div>
-            <div className={styles.heart}>
-              <span>Thêm vào danh sách yêu thích</span>
-              <HeartOutlined twoToneColor="#eb2f96" />
-            </div>
-            <div className={styles.compare}>
+            <div
+              onClick={handleAddToCompareList}
+              className={styles.compare}>
               Thêm vào danh sách so sánh
               <PlusCircleOutlined twoToneColor="green" />
             </div>
@@ -115,15 +128,9 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
 
               Hãng Dell tuyên bố Dell latitude  E5470 đã vượt qua khâu kiểm tra độ bền quân sự với tiêu chuẩn MIL-STD-810G. Tức là Dell Latitude E5470 có thể hoạt động ở môi trường nhiệt độ cao lên tới 60 độ C, nhiệt độ thấp nhất mà Dell Latitude E5470 vẫn có thể hoạt động là -6 độ và độ cao cao là 4572m.
 
-
-
               Keyboard và Touchpad
 
               Một chuyên gia đã nói Dell latitude e5470 là một bàn phím tuyệt vời. Để khẳng định câu khen ngợi của mình , ông đã kiểm tra sự nhạy của bàn phím và kết quả là ông đã gõ được 79 từ/phút với độ chính xác 100% trên website Ông cho rằng: " Keyboard của Dell Latitude E5470 thật sự rất đáng khen ngợi, có thể nói đây là một trong những chiếc Laptop có bàn phím tuyệt hảo. Nó chính xác đến từng mm". Và touchpad của Dell Latitude E5470 cũng được sản xuất với yêu cầu kỹ thuật cao, sự mịn màng cùng với khả năng điều hướng tốt góp phần nâng tầm chất lượng của Dell Latitude E5470.
-
-
-
-
 
               Giá sản phẩm trên Tiki đã bao gồm thuế theo luật hiện hành. Bên cạnh đó, tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển, phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
             </div>

@@ -1,56 +1,83 @@
-import { Space, Table, TableProps, Tag } from 'antd';
+import { ProductDetail } from '@/types/property.types';
+import { Table } from 'antd';
+import Link from 'next/link';
 import React from 'react'
-interface DataType {
-  key: string;
-  name: string;
-  age: string;
-}
-const columns: TableProps<DataType>['columns'] = [
-  {
-    title: <span style={{ fontSize: '18px' }}>Bộ nhớ RAM, ổ cứng</span>,
-    dataIndex: 'name',
-    key: 'name',
-    render: (text) => <a style={{ fontWeight: 500 }}>{text}</a>,
-    width: '250px'
-  },
-  {
-    title: '',
-    dataIndex: 'age',
-    key: 'age',
-  },
-];
-const data: DataType[] = [
-  {
-    key: '1',
-    name: 'RAM',
-    age: '8 GB'
-  },
-  {
-    key: '2',
-    name: 'Loại RAM',
-    age: 'DDR4 2 khe (1 khe 8 GB onboard + 1 khe trống)'
-  },
-  {
-    key: '3',
-    name: 'Tốc độ bus RAM',
-    age: '3200 MHz'
-  },
-  {
-    key: '3',
-    name: 'Hỗ trợ RAM tối đa',
-    age: '24 GB'
-  },
-  {
-    key: '3',
-    name: 'Ổ cứng',
-    age: '512 GB SSD NVMe PCIe 4.0 (Có thể tháo ra, lắp thanh khác tối đa 1 TB)'
-  },
-];
-const TableRAMInfor = () => {
 
+const TableRAM = ({ products }: { products: ProductDetail[] }) => {
   return (
-    <Table columns={columns} dataSource={data} pagination={false} />
+    <>
+      {products &&
+        <Table
+          columns={
+            [
+              {
+                title: <span style={{ fontSize: '18px' }}>Bộ nhớ RAM, ổ cứng</span>,
+                dataIndex: 'name',
+                key: 'name',
+                render: (text:any) => <a style={{ fontWeight: 500 }}>{text}</a>,
+                width: '250px'
+            
+              },
+              {
+                title: <Link href={`/product/${products[0]?.id}`}>{products[0]?.name}</Link>,
+                dataIndex: 'laptop_1',
+                key: 'laptop_1',
+              },
+              {
+                title: <Link href={`/product/${products[1]?.id}`}>{products[1]?.name}</Link>,
+                dataIndex: 'laptop_2',
+                key: 'laptop_2',
+              },
+              {
+                title: <Link href={`/product/${products[2]?.id}`}>{products[2]?.name}</Link>,
+                dataIndex: 'laptop_3',
+                key: 'laptop_3',
+              },
+            ]
+          }
+          dataSource={[
+            {
+              key: '1',
+              name: 'RAM',
+              laptop_1: products[0]?.memoryCapacity,
+              laptop_2: products[1]?.memoryCapacity,
+              laptop_3: products[2]?.memoryCapacity,
+            },
+            {
+              key: '2',
+              name: 'Loại RAM',
+              laptop_1: products[0]?.memoryType,
+              laptop_2: products[1]?.memoryType,
+              laptop_3: products[2]?.memoryType,
+            },
+            {
+              key: '3',
+              name: 'Tốc độ bus RAM',
+              laptop_1: products[0]?.memoryBus,
+              laptop_2: products[1]?.memoryBus,
+              laptop_3: products[2]?.memoryBus,
+            },
+            {
+              key: '4',
+              name: 'Hỗ trợ RAM tối đa',
+              laptop_1: products[0]?.maxMemoryCapacity,
+              laptop_2: products[1]?.maxMemoryCapacity,
+              laptop_3: products[2]?.maxMemoryCapacity,
+            },
+            {
+              key: '5',
+              name: 'Ổ cứng',
+              laptop_1: products[0]?.storage,
+              laptop_2: products[1]?.storage,
+              laptop_3: products[2]?.storage,
+            },
+          ]}
+          pagination={false}
+          style={{ overflowX: 'auto' }}
+        />
+      }
+    </>
   )
 }
 
-export default TableRAMInfor
+export default TableRAM

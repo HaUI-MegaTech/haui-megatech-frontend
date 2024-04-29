@@ -2,6 +2,9 @@
   background-color: #fff;
   border-radius   : 20px;
   padding         : 30px;
+  a {
+    text-decoration: none;
+  }
 
   .top {
     display        : flex;
@@ -24,15 +27,20 @@
         color        : #007aff;
         margin-bottom: 20px;
       }
-    }
 
-    .topRight {
-      display  : flex;
-      flex-wrap: wrap;
-      gap      : 30px;
-
-      @media screen and (max-width: 600px) {
-        justify-content: center;
+      .images {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        .right {
+          text-align: right;
+          cursor: pointer;
+        }
+        img {
+          width: 100%;
+          height: 200px;  
+          object-fit: cover;
+        }
       }
     }
   }

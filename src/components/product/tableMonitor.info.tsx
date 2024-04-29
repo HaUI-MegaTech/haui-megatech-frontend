@@ -1,57 +1,76 @@
-import { Space, Table, TableProps, Tag } from 'antd';
+import { ProductDetail } from '@/types/property.types';
+import { Table } from 'antd';
+import Link from 'next/link';
 import React from 'react'
-interface DataType {
-  key: string;
-  name: string;
-  age: string;
-}
-const columns: TableProps<DataType>['columns'] = [
-  {
-    title: <span style={{ fontSize: '18px' }}>Màn hình</span>,
-    dataIndex: 'name',
-    key: 'name',
-    render: (text) => <a style={{ fontWeight: 500 }}>{text}</a>,
-    width: '250px'
 
-  },
-  {
-    title: '',
-    dataIndex: 'age',
-    key: 'age',
-  },
-];
-const data: DataType[] = [
-  {
-    key: '1',
-    name: 'RAM',
-    age: '8 GB'
-  },
-  {
-    key: '2',
-    name: 'Loại RAM',
-    age: 'DDR4 2 khe (1 khe 8 GB onboard + 1 khe trống)'
-  },
-  {
-    key: '3',
-    name: 'Tốc độ bus RAM',
-    age: '3200 MHz'
-  },
-  {
-    key: '3',
-    name: 'Hỗ trợ RAM tối đa',
-    age: '24 GB'
-  },
-  {
-    key: '3',
-    name: 'Ổ cứng',
-    age: '512 GB SSD NVMe PCIe 4.0 (Có thể tháo ra, lắp thanh khác tối đa 1 TB)'
-  },
-];
-const TableMonitorInfor = () => {
-
+const tableMonitorInfor = ({ products }: { products: ProductDetail[] }) => {
   return (
-    <Table columns={columns} dataSource={data} pagination={false} />
+    <>
+      {products &&
+        <Table
+          columns={
+            [
+              {
+                title: <span style={{ fontSize: '18px' }}>Màn hình</span>,
+                dataIndex: 'name',
+                key: 'name',
+                render: (text: any) => <a style={{ fontWeight: 500 }}>{text}</a>,
+                width: '250px'
+
+              },
+              {
+                title: <Link href={`/product/${products[0]?.id}`}>{products[0]?.name}</Link>,
+                dataIndex: 'laptop_1',
+                key: 'laptop_1',
+              },
+              {
+                title: <Link href={`/product/${products[1]?.id}`}>{products[1]?.name}</Link>,
+                dataIndex: 'laptop_2',
+                key: 'laptop_2',
+              },
+              {
+                title: <Link href={`/product/${products[2]?.id}`}>{products[2]?.name}</Link>,
+                dataIndex: 'laptop_3',
+                key: 'laptop_3',
+              },
+            ]
+          }
+          dataSource={[
+            {
+              key: '1',
+              name: 'Màn hình',
+              laptop_1: products[0]?.displaySize,
+              laptop_2: products[1]?.displaySize,
+              laptop_3: products[2]?.displaySize,
+            },
+            {
+              key: '2',
+              name: 'Độ phân giải',
+              laptop_1: products[0]?.resolution,
+              laptop_2: products[1]?.resolution,
+              laptop_3: products[2]?.resolution,
+            },
+            {
+              key: '3',
+              name: 'Độ phủ màu',
+              laptop_1: products[0]?.colorGamut,
+              laptop_2: products[1]?.colorGamut,
+              laptop_3: products[2]?.colorGamut,
+            },
+            {
+              key: '4',
+              name: 'Tần số quét',
+              laptop_1: products[0]?.refreshRate,
+              laptop_2: products[1]?.refreshRate,
+              laptop_3: products[2]?.refreshRate,
+            },
+          ]}
+          pagination={false}
+          style={{ overflowX: 'auto' }}
+        />
+      }
+    </>
   )
 }
 
-export default TableMonitorInfor
+export default tableMonitorInfor

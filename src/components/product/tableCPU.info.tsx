@@ -12,7 +12,6 @@ const columns: TableProps<DataType>['columns'] = [
     key: 'name',
     render: (text) => <a style={{ fontWeight: 500 }}>{text}</a>,
     width: '250px'
-
   },
   {
     title: '',
@@ -37,12 +36,12 @@ const data: DataType[] = [
     age: '12'
   },
   {
-    key: '3',
+    key: '4',
     name: 'Tốc độ CPU',
     age: '1.30 GHz'
   },
   {
-    key: '3',
+    key: '5',
     name: 'Tốc độ tối đa',
     age: 'Turbo Boost 4.6 GHz'
   },

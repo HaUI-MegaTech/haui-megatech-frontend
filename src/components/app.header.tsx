@@ -1,6 +1,5 @@
 import { HeartOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Badge, Input } from 'antd';
-import Search from 'antd/es/input/Search';
 import Image from 'next/image';
 import React from 'react'
 import styles from '@/styles/header.module.scss'
@@ -33,21 +32,20 @@ const AppHeader = () => {
       </div>
       <div className={styles.actions}>
         <div className={styles.cart}>
-          <Badge count={3} style={{ background: '#007aff' }}>
-            <Link href="/cart">
+          <Link href="/cart">
+            <Badge count={3} style={{ background: '#007aff' }}>
               <ShoppingCartOutlined style={{ fontSize: '30px' }} />
-            </Link>
-          </Badge>
-          <span>Giỏ hàng</span>
+            </Badge>
+            <span>Giỏ hàng</span>
+          </Link>
         </div>
         <div className={styles.cart}>
-          <Badge count={5} style={{ background: '#007aff' }}>
-            <Link href="/cart">
+          <Link href="/compare">
+            <Badge count={5} style={{ background: '#007aff' }}>
               <HeartOutlined style={{ fontSize: '30px' }} />
-            </Link>
-          </Badge>
-          <span>Yêu thích</span>
-
+            </Badge>
+            <span>So sánh</span>
+          </Link>
         </div>
         <div>
           <Link href='/user'>
