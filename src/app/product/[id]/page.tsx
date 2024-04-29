@@ -1,26 +1,27 @@
 'use client'
-import ProductImages from '@/components/product/image.gallery'
+import handleProducts from '@/api/user.request';
+import ListProduct from '@/components/app.products';
+import ReviewCard from '@/components/product/review.card';
+import { Image, Product, ProductDetail } from '@/types/property.types';
 import React, { useEffect, useState } from 'react'
-import styles from "./styles.module.scss"
+import ProductImages from '@/components/product/image.gallery'
+import styles from "../styles.module.scss"
 import { InputNumber, Progress, Rate, Tag } from 'antd'
 import { CheckCircleTwoTone, DollarTwoTone, HeartOutlined, PlusCircleOutlined, RollbackOutlined } from '@ant-design/icons'
 import TableCPUInfor from '@/components/product/tableCPU.info'
 import TableRAMInfor from '@/components/product/tableRAM.info'
 import TableMonitorInfor from '@/components/product/tableMonitor.info'
-import ListProduct from '@/components/app.products'
-import ReviewCard from '@/components/product/review.card'
-import handleProducts from '@/api/user.request'
-import { Product } from '@/types/property.types'
 
-const ProductDetail = () => {
-  const [listProduct1, setListProduct1] = useState<Product[]>([]);
+const ProductDetailPage = ({ params }: { params: { id: string } }) => {
+  const [productInfo, setProductInfo] = useState<ProductDetail>();
+  const [listProduct, setListProduct] = useState<Product[]>([]);
+  const [arrImg, setArrImg] = useState<Image[]>();
+
   const getAllProducts = async () => {
     try {
       const res: any = await handleProducts.getProducts();
-      const res1: any = await handleProducts.getProductById('1');
       if (res) {
-        setListProduct1(res.items);
-        console.log(res1);
+        setListProduct(res.items);
       } else {
         console.log(`There was an error not found response`);
       }
@@ -28,23 +29,38 @@ const ProductDetail = () => {
       console.log(`There was an error ${error}`);
     }
   };
+  const handleGetDetailProduct = async () => {
+    try {
+      let res = await handleProducts.getProductById(params.id);
+      if (res) {
+        let data = res.item;
+        console.log(data);
+        setProductInfo(data);
+        setArrImg(data.images)
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
   useEffect(() => {
+    handleGetDetailProduct();
     getAllProducts();
   }, [])
+
   return (
-    <>
+    <div>
       <div className={styles.inforTop}>
         <div className={styles.image}>
-          <ProductImages />
+          {arrImg && <ProductImages images={arrImg}/>}
         </div>
         <div className={styles.content}>
           <div className={styles.contentTop}>
-            <span>Thương hiệu: <span className={styles.brand}>Asus</span></span>
-            <h1>Laptop Asus Expertbook B1502CBA B1502 (Intel Core i5-1235U | RAM 8GB | 512GB SSD | Intel UHD Graphics | 15.6 inch Full HD | Win 11 bản quyền) - Hàng Chính Hãng</h1>
+            <span>Thương hiệu: <span className={styles.brand}>{productInfo?.os}</span></span>
+            <h1>{productInfo?.name}</h1>
             <div>
               <Rate disabled defaultValue={5} /> (10) | Đã bán: 120
             </div>
-            <div className={styles.price}>14.950.000đ</div>
+            <div className={styles.price}>{(new Intl.NumberFormat('vi-VN').format(productInfo?.currentPrice))}đ</div>
 
             <p>Tình trạng: <Tag color="green">còn hàng</Tag></p>
 
@@ -169,10 +185,10 @@ const ProductDetail = () => {
         </div>
       </div>
       <div className={styles.relateProduct}>
-        <ListProduct listProduct={listProduct1} title="SẢN PHẨM LIÊN QUAN" />
+        <ListProduct listProduct={listProduct} title="SẢN PHẨM LIÊN QUAN" />
       </div>
-    </>
+    </div>
   )
 }
 
-export default ProductDetail;
+export default ProductDetailPage
