@@ -3,7 +3,7 @@ export interface Image {
   id?: string
 }
 export interface Product {
-	bannerImg?: string,
+	mainImg?: string,
 	battery?: string,
 	card?: string,
 	discountPercent?: string,
