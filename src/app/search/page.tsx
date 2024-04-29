@@ -46,11 +46,27 @@ const SearchPage = () => {
     }
   }
   const changePageIndex = (pageIndex: number) => {
-    setPageIndex(+pageIndex-1)
+    setPageIndex(+pageIndex - 1)
   }
   useEffect(() => {
     handleGetProducts();
   }, [searchParams, pageIndex, pageSize])
+
+  const [listBrand, setListBrand] = useState<ListBrand[]>([]);
+  const handleGetListBrands = async () => {
+    try {
+      let res: any = await handleProducts.getListBrands();
+      if (res) {
+        setListBrand(res.items);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    handleGetListBrands();
+  }, [])
   return (
     <div className={styles.container}>
       <div className={styles.main}>
@@ -66,15 +82,9 @@ const SearchPage = () => {
             >
               <Checkbox.Group>
                 <Row>
-                  <Col span={24}>
-                    <Checkbox value={1}>Acer</Checkbox>
-                  </Col>
-                  <Col span={24}>
-                    <Checkbox value={2}>Dell</Checkbox>
-                  </Col>
-                  <Col span={24}>
-                    <Checkbox value={3}>Macbook</Checkbox>
-                  </Col>
+                  {listBrand?.map((item) => <Col key={item.id} span={24}>
+                    <Checkbox value={item.name}>{item.name}</Checkbox>
+                  </Col>)}
                 </Row>
               </Checkbox.Group>
             </Form.Item>
