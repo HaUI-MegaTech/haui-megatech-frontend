@@ -14,7 +14,7 @@ export const useProductViewedStore = create<ProductState>()(
       addProductViewed: (product) => {
         const currentProducts = get().productsViewed;
         let index = currentProducts.findIndex(prod => prod.id === product.id);
-        if (currentProducts.length >= 12) {
+        if (currentProducts.length >= 10) {
           currentProducts.shift();
         } else {
           if (index != -1) {
