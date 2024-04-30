@@ -4,47 +4,42 @@ import React, { useEffect, useState } from 'react'
 import styles from '@/styles/products.module.scss'
 import { Menu, MenuProps } from 'antd'
 import { Baloo_2 } from 'next/font/google'
-import { useSearchParams } from 'next/navigation'
-import { ListProductProps } from '@/types/property.types'
+import { Brand, ListBrand, ListProductProps } from '@/types/property.types'
+import handleProducts from '@/api/user.request'
+import Link from 'next/link'
 const baloo = Baloo_2({
 	weight: ['400', '600'],
 	subsets: ["vietnamese"],
 })
 
-const items: MenuProps['items'] = [
-	{
-		label: (
-			<span className={styles.menuItem}>Macbook</span>
-		),
-		key: '1',
-	},
-	{
-		label: (
-			<span className={styles.menuItem}>Asus</span>
-		),
-		key: '2',
-	},
-	{
-		label: (
-			<span className={styles.menuItem}>Dell</span>
-		),
-		key: '3',
-	},
-	{
-		label: (
-			<span className={styles.menuItem}>Acer</span>
-		),
-		key: '4',
-	},
-	{
-		label: (
-			<span className={styles.menuItem}>Xem thêm</span>
-		),
-		key: '5',
-	},
-];
-
 const ListProduct : React.FC<ListProductProps> = ({ listProduct, title }) => {
+	const [listBrand, setListBrand] = useState<ListBrand[]>([]);
+	const handleGetListBrands = async () => {
+		try {
+			let res: any = await handleProducts.getListBrands();
+			if (res) {
+				let arr = res.items;
+				const brands = arr.map((item: Brand) => {
+					return ({
+						key: item.id,
+						label: (
+							<Link href={`/search?brand=${item.id}`}><span className={styles.menuItem}> {item.name}</span ></Link>
+						)
+					})
+				})
+				setListBrand(brands);
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
+	useEffect(() => {
+		handleGetListBrands();
+	}, [])
+
+	const items: MenuProps['items'] = listBrand.slice(0, 5);
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.header}>

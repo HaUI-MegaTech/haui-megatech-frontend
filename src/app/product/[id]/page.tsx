@@ -13,24 +13,13 @@ import TableCPUInfor from '@/components/product/tableCPU.info'
 import TableRAMInfor from '@/components/product/tableRAM.info'
 import TableMonitorInfor from '@/components/product/tableMonitor.info'
 import { useProductCompareStore } from '@/store/product.compare.store';
+import { useProductViewedStore } from '@/store/product.viewed.store';
 
 const ProductDetailPage = ({ params }: { params: { id: string } }) => {
   const [productInfo, setProductInfo] = useState<ProductDetail>();
-  const [listProduct, setListProduct] = useState<Product[]>([]);
   const [arrImg, setArrImg] = useState<Image[]>();
+  const productsViewed = useProductViewedStore(state => state.productsViewed);
 
-  const getAllProducts = async () => {
-    try {
-      const res: any = await handleProducts.getProducts();
-      if (res) {
-        setListProduct(res.items);
-      } else {
-        console.log(`There was an error not found response`);
-      }
-    } catch (error) {
-      console.log(`There was an error ${error}`);
-    }
-  };
   const handleGetDetailProduct = async () => {
     try {
       let res = await handleProducts.getProductById(params.id);
@@ -44,10 +33,11 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
       console.log(err);
     }
   }
+  
   useEffect(() => {
     handleGetDetailProduct();
-    getAllProducts();
   }, [])
+
   const addProductCompare = useProductCompareStore(state => state.addProductToCompare);
   const productList = useProductCompareStore(state => state.products);
   // console.log('before', productListCompare);
@@ -61,6 +51,7 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
   }
   useEffect(() => {
     useProductCompareStore.persist.rehydrate()
+    useProductViewedStore.persist.rehydrate()
   }, [])
   return (
     <div>
@@ -192,7 +183,7 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
         </div>
       </div>
       <div className={styles.relateProduct}>
-        <ListProduct listProduct={listProduct} title="SẢN PHẨM LIÊN QUAN" />
+        <ListProduct listProduct={productsViewed} title="SẢN PHẨM ĐÃ XEM" />
       </div>
     </div>
   )
