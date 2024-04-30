@@ -12,7 +12,7 @@ import { CheckCircleTwoTone, DollarTwoTone, HeartOutlined, PlusCircleOutlined, R
 import TableCPUInfor from '@/components/product/tableCPU.info'
 import TableRAMInfor from '@/components/product/tableRAM.info'
 import TableMonitorInfor from '@/components/product/tableMonitor.info'
-import { useProductCompareStore } from '@/store/store';
+import { useProductCompareStore } from '@/store/product.compare.store';
 
 const ProductDetailPage = ({ params }: { params: { id: string } }) => {
   const [productInfo, setProductInfo] = useState<ProductDetail>();

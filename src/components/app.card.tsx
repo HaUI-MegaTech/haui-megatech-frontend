@@ -4,10 +4,17 @@ import React, { useEffect, useState } from 'react'
 import styles from '@/styles/card.module.scss'
 import { Product } from '@/types/property.types'
 import Link from 'next/link'
+import { useProductViewedStore } from '@/store/product.viewed.store'
 
 const AppCard = ({ product }: { product: Product }) => {
+  const addProductViewed = useProductViewedStore(state => state.addProductViewed);
+  useEffect(() => {
+    useProductViewedStore.persist.rehydrate()
+  }, [])
   return (
-    <Link href={`/product/${product.id}`}>
+    <Link 
+    onClick={() => addProductViewed(product)}
+    href={`/product/${product.id}`}>
       <div className={styles.container}>
         <div className={styles.image}>
           <Image

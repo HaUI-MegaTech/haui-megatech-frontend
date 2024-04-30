@@ -35,6 +35,6 @@ export const useProductCompareStore = create<ProductState>()(
       name: "haui-megatech-compare",
       storage: createJSONStorage(() => localStorage),
       skipHydration: true
-    }
+    },
   )
 )

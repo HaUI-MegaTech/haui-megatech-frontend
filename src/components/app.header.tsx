@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 import styles from '@/styles/header.module.scss'
 import logo from '../../public/images/logo.png'
 import Link from 'next/link';
-import { useProductCompareStore } from '@/store/store';
+import { useProductCompareStore } from '@/store/product.compare.store';
 
 const AppHeader = () => {
   const productsCompare = useProductCompareStore(state => state.products);
