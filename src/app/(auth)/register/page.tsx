@@ -3,8 +3,9 @@ import React from 'react'
 import styles from './styles.module.scss'
 import { Form, type FormProps, Input } from 'antd';
 import Image from 'next/image';
-import imageLogin from '../../../public/images/login-register.jpg';
+import imageLogin from '../../../../public/images/login-register.jpg';
 import handleAuth from '@/api/auth.request';
+import { useRouter } from 'next/navigation';
 
 type FieldType = {
   username?: string;
@@ -13,21 +14,25 @@ type FieldType = {
   password?: string;
   re_password?: string;
 };
-const onFinish: FormProps<FieldType>["onFinish"] = async (values: object) => {
-  console.log('Success:', values);
-  try {
-    let res = await handleAuth.registerAccount(values);
-    if (res) console.log(res);
-  } catch (err) {
-    console.log(err);
-  };
-};
 
 const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
   console.log('Failed:', errorInfo);
 };
 
 const RegisterPage = () => {
+  const router = useRouter();
+  const onFinish: FormProps<FieldType>["onFinish"] = async (values: object) => {
+    console.log('Success:', values);
+    try {
+      let res = await handleAuth.registerAccount(values);
+      if (res && res.token) {
+        console.log(res);
+        router.push('/');
+      }
+    } catch (err) {
+      console.log(err);
+    };
+  };
   return (
     <div className={styles.container}>
       <div className={styles.formContainer}>
@@ -42,19 +47,19 @@ const RegisterPage = () => {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          
+
           <Form.Item<FieldType>
-            label="First name"
+            label="Họ"
             name="firstName"
-            rules={[{ required: true, message: 'Nhập email!' }]}
+            rules={[{ required: true, message: 'Nhập họ!' }]}
           >
             <Input />
           </Form.Item>
-          
+
           <Form.Item<FieldType>
-            label="Last name"
+            label="Tên"
             name="lastName"
-            rules={[{ required: true, message: 'Nhập email!' }]}
+            rules={[{ required: true, message: 'Nhập tên!' }]}
           >
             <Input />
           </Form.Item>
@@ -77,7 +82,16 @@ const RegisterPage = () => {
           <Form.Item<FieldType>
             label="Nhập lại mật khẩu"
             name="re_password"
-            rules={[{ required: true, message: 'Nhập lại mật khẩu!' }]}
+            rules={[
+              { required: true, message: 'Nhập lại mật khẩu!' },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('password') === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error('Xác nhận mật khẩu không đúng!'));
+                },
+              }),]}
           >
             <Input.Password />
           </Form.Item>

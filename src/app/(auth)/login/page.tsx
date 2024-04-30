@@ -3,28 +3,34 @@ import React from 'react'
 import styles from './styles.module.scss'
 import { Form, type FormProps, Input } from 'antd';
 import Image from 'next/image';
-import imageLogin from '../../../public/images/login-register.jpg';
+import imageLogin from '../../../../public/images/login-register.jpg';
 import handleAuth from '@/api/auth.request';
+import { useRouter } from 'next/navigation';
 
 type FieldType = {
   username?: string;
   password?: string;
-};
-const onFinish: FormProps<FieldType>["onFinish"] = async (values: object) => {
-  console.log('Success:', values);
-  try {
-    let res = await handleAuth.login(values);
-    if (res) console.log(res);
-  } catch (err) {
-    console.log(err);
-  };
 };
 
 const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
   console.log('Failed:', errorInfo);
 };
 
-const RegisterPage = () => {
+const LoginPage = () => {
+  const router = useRouter();
+  const onFinish: FormProps<FieldType>["onFinish"] = async (values: object) => {
+    console.log('Success:', values);
+    try {
+      let res = await handleAuth.login(values);
+      if (res && res.token) {
+        console.log(res);
+        router.push('/')
+      }
+    } catch (err) {
+      console.log(err);
+    };
+  };
+  
   return (
     <div className={styles.container}>
       <div className={styles.formContainer}>
@@ -67,4 +73,4 @@ const RegisterPage = () => {
   )
 }
 
-export default RegisterPage
+export default LoginPage
