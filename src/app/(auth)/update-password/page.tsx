@@ -3,14 +3,12 @@ import React from 'react'
 import styles from './styles.module.scss'
 import { Form, type FormProps, Input } from 'antd';
 import Image from 'next/image';
-import imageLogin from '../../../public/images/login-register.jpg';
+import imageLogin from '../../../../public/images/login-register.jpg';
 
 type FieldType = {
-  username?: string;
-  email?: string;
-  password?: string;
-  re_password?: string;
-  remember?: string;
+  oldPassword: string,
+  newPassword?: string;
+  confirmNewPassword?: string;
 };
 const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
   console.log('Success:', values);
@@ -20,7 +18,7 @@ const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
   console.log('Failed:', errorInfo);
 };
 
-const RegisterPage = () => {
+const UpdatePasswordPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.formContainer}>
@@ -36,7 +34,7 @@ const RegisterPage = () => {
           autoComplete="off"
         >
           <Form.Item<FieldType>
-            label="Tên đăng nhập"
+            label="Nhập khẩu cũ"
             name="username"
             rules={[{ required: true, message: 'Nhập tên đăng nhập!' }]}
           >
@@ -63,4 +61,4 @@ const RegisterPage = () => {
   )
 }
 
-export default RegisterPage
+export default UpdatePasswordPage

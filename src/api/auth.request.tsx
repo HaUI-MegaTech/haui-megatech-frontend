@@ -1,15 +1,26 @@
 import axiosClient from "./config"
 
-const BASE_URL = "http://localhost:8080/api/v1/auth/"
+const BASE_URL = "http://localhost:8080/api/v1/"
+type FieldType = {
+  id: string,
+  firstName: string
+  lastName: string
+  avatar: string
+  email: string
+  phoneNumber: string
+};
 class HandleAuth {
   registerAccount = async (data: object) => {
-    return axiosClient.post(BASE_URL + 'register', data)
+    return axiosClient.post(BASE_URL + 'auth/register', data)
   }
   login = async (data: object) => {
-    return axiosClient.post(BASE_URL + 'authenticate', data)
+    return axiosClient.post(BASE_URL + 'auth/authenticate', data)
   }
-  forgotPassword = async (url: string) => {
-    return axiosClient.post(BASE_URL + url)
+  forgotPassword = async (id: number) => {
+    return axiosClient.patch(BASE_URL + `users/reset-password/${id}`)
+  }
+  updateUserInfor = async (user: FieldType) => {
+    return axiosClient.put(BASE_URL + `users/update-info/1033`, user)
   }
 }
 

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import imageLogin from '../../../../public/images/login-register.jpg';
 import handleAuth from '@/api/auth.request';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 type FieldType = {
   username?: string;
@@ -23,6 +24,7 @@ const LoginPage = () => {
     try {
       let res = await handleAuth.login(values);
       if (res && res.token) {
+        localStorage.setItem('token', res.token);
         console.log(res);
         router.push('/')
       }
@@ -30,6 +32,15 @@ const LoginPage = () => {
       console.log(err);
     };
   };
+
+  const handleForgetPassword = async () => {
+    try {
+      const res = await handleAuth.forgotPassword(1033);
+      if (res) console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  }
   
   return (
     <div className={styles.container}>
@@ -65,6 +76,12 @@ const LoginPage = () => {
             <button className={styles.button}>Đăng nhập</button>
           </Form.Item>
         </Form>
+        <div className={styles.bottom}>
+          <div
+            onClick={() => handleForgetPassword()}
+            className={styles.forget}>Quên mật khẩu</div>
+          <div className={styles.forget}><Link href='/register'>Chưa có tài khoản?</Link></div>
+        </div>
       </div>
       <div className={styles.imageContainer}>
         <Image src={imageLogin} alt='' className={styles.image} />

@@ -30,6 +30,27 @@
         transition      : all ease 0.3s;
       }
     }
+
+    .bottom {
+      display: flex;
+      gap: 20px;
+      font-size: 15px;
+      text-align: center;
+      justify-content: center;
+      .forget {
+        cursor: pointer;
+        a {
+          text-decoration: none;
+          color: black;
+          &:hover {
+            color: #007aff;
+          }
+        }
+        &:hover {
+          color: #007aff;
+        }
+      }
+    }
   }
 
   .imageContainer {

@@ -5,13 +5,36 @@ import {
   Button,
   DatePicker,
   Form,
+  FormProps,
   Input,
   Select,
   Upload,
 } from 'antd';
 import Image from 'next/image'
-
+import handleAuth from '@/api/auth.request';
+type FieldType = {
+  id: string,
+  firstName: string
+  lastName: string
+  avatar: string
+  email: string
+  phoneNumber: string
+};
 const UserInfo = () => {
+  const onFinish: FormProps<FieldType>["onFinish"] = async (values: FieldType) => {
+    console.log('Success:', values);
+    try {
+      let res = await handleAuth.updateUserInfor(values);
+      if (res) {
+        console.log(res);
+      }
+    } catch (err) {
+      console.log(err);
+    };
+  };
+  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
   return (
     <div className={styles.container}>
       <div className={styles.left}>
@@ -50,11 +73,19 @@ const UserInfo = () => {
               wrapperCol={{ span: 14 }}
               layout="horizontal"
               style={{ width: '100%', margin: '0 auto' }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
             >
-              <Form.Item label="Họ và tên" className={styles.formItem}>
+              <Form.Item<FieldType>
+                label="Họ"
+                name="firstName"
+              >
                 <Input />
               </Form.Item>
-              <Form.Item label="Số điện thoại">
+              <Form.Item<FieldType>
+                label="Tên"
+                name="lastName"
+              >
                 <Input />
               </Form.Item>
               <Form.Item label="Quốc gia">
@@ -75,29 +106,26 @@ const UserInfo = () => {
               <Form.Item label="Địa chỉ">
                 <Input />
               </Form.Item>
-              <Form.Item label="Ngày sinh">
-                <DatePicker />
+              <Form.Item<FieldType>
+                label="Điện thoại"
+                name="phoneNumber"
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item<FieldType>
+                label="Email"
+                name="email"
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item<FieldType>
+                label="Ảnh đại diện"
+                name="avatar"
+              >
+                <Input />
               </Form.Item>
               <Form.Item style={{ textAlign: 'center' }}>
-                <Button>Cập nhật</Button>
-              </Form.Item>
-              <Form.Item name='image'
-              // getValueFromEvent={getFile}
-              >
-                {/* <Upload
-                                    name="avatar"
-                                    listType="picture-circle"
-                                    className="avatar-uploader"
-                                    showUploadList={false}
-                                    action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-                                    beforeUpload={beforeUpload}
-                                    onChange={handleChange}
-                                >
-                                    {imageUrl ?
-                                        <img src={imageUrl} alt="avatar" style={{ width: '100%' }} />
-                                        :
-                                        uploadButton}
-                                </Upload> */}
+                <button>Cập nhật</button>
               </Form.Item>
             </Form>
           </div>
