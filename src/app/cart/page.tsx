@@ -1,103 +1,77 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './styles.module.scss'
-import { Button, Space, Table, Tag } from 'antd';
-import type { TableProps } from 'antd';
+import { Image, Input, InputNumber, Table } from 'antd';
 import Link from 'next/link';
+import type { TableColumnsType } from 'antd';
+import { useProductViewedStore } from '@/store/product.viewed.store';
+
 
 interface DataType {
-  key: string;
+  id: number,
+  key: number;
   name: string;
-  age: number;
-  address: string;
-  tags: string[];
+  mainImg: string,
+  newPrice: number;
 }
 
-const columns: TableProps<DataType>['columns'] = [
+const columns: TableColumnsType<DataType> = [
   {
-    title: 'Name',
+    title: 'Ảnh',
+    dataIndex: 'mainImg',
+    width: '15%',
+    render: (text) => <Image width={100} src={text} alt="" />,
+  },
+  {
+    title: 'Tên sản phẩm',
     dataIndex: 'name',
-    key: 'name',
-    render: (text) => <a>{text}</a>,
+    width: '32%',
+    render: (text, record) => <Link href={`/product/${record.id}`}><span style={{fontWeight: '500', color: '#007aff', cursor: 'pointer', fontSize: '16px'}}>{text}</span></Link>,
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: 'Giá',
+    dataIndex: 'newPrice',
+    width: '18%',
+    render: (text) => <span style={{fontWeight: '500', fontSize: '17px'}}>{(new Intl.NumberFormat('vi-VN').format(text))} đ</span>
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: 'Số lượng',
+    dataIndex: 'quantity',
+    render: () => <InputNumber />,
   },
   {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    ),
-  },
-];
-
-const data: DataType[] = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
+    title: 'Thành tiền',
+    dataIndex: 'total',
+    width: '20%',
   },
 ];
 
 const Cart = () => {
+  const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
+
+  const onSelectChange = (newSelectedRowKeys: number[]) => {
+    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+  };
+  const hasSelected = selectedRowKeys.length > 0;
+  const productsInCart = useProductViewedStore(state => state.productsViewed);
+
+  useEffect(() => {
+    useProductViewedStore.persist.rehydrate();
+  }, [])
   return (
     <div className={styles.container}>
       <div className={styles.title}>Giỏ hàng</div>
-      <div className={styles.subTitle}>Bạn có 2 sản phẩm trong giỏ hàng</div>
+      <div className={styles.subTitle}>
+        {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
+      </div>
       <div>
-        <Table
-          columns={columns}
-          dataSource={data}
-          style={{ overflowX: 'auto' }}
-          pagination={false}
-        />
+        <Table rowSelection={rowSelection} columns={columns} dataSource={productsInCart} />
       </div>
       <div className={styles.btnOrder}>
         <button><Link href="/order">Mua hàng</Link></button>
