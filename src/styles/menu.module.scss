@@ -1,16 +1,16 @@
 .container {
-	display         : flex;
-	padding         : 10px 30px;
-	justify-content : space-between;
-	align-items     : center;
+	display: flex;
+	padding: 10px 30px;
+	justify-content: space-between;
+	align-items: center;
 	background-color: #fff;
 	a {
-		text-decoration: none;
+		text-decoration: none !important;
 	}
 }
 
 .main {
-	font-size  : 32px !important;
+	font-size: 32px !important;
 	font-weight: 600;
 
 	@media screen and (max-width: 920px) {
@@ -19,8 +19,8 @@
 }
 
 .phone {
-	display    : flex;
-	gap        : 10px;
+	display: flex;
+	gap: 10px;
 	align-items: center;
 
 	@media screen and (max-width: 1100px) {
@@ -28,17 +28,17 @@
 	}
 
 	.content {
-		display       : flex;
+		display: flex;
 		flex-direction: column;
 
 		.number {
-			color      : #007aff;
+			color: #007aff;
 			font-weight: 700;
-			font-size  : 23px;
+			font-size: 23px;
 		}
 
 		.text {
-			font-size : 12px;
+			font-size: 12px;
 			text-align: center;
 		}
 	}

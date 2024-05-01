@@ -24,7 +24,7 @@ const MenuCategories = () => {
 					return ({
 						key: item.id,
 						label: (
-							<Link href={`/search?brand=${item.id}`}><span style={{ padding: '20px 0' }}> {item.name}</span ></Link>
+							<Link style={{textDecoration: 'none'}} href={`/search?brand=${item.id}`}><span style={{ padding: '20px 0' }}>{item.name}</span ></Link>
 						)
 					})
 				})
@@ -43,7 +43,7 @@ const MenuCategories = () => {
 
 	return (
 		<div className={styles.container}>
-			<div className='dropDown'>
+			<div>
 				<Dropdown menu={{ items }}>
 					<a
 					//onClick={(e) => e.preventDefault()}
