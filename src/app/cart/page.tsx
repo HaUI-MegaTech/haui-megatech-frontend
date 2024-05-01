@@ -5,6 +5,7 @@ import { Image, Input, InputNumber, Table } from 'antd';
 import Link from 'next/link';
 import type { TableColumnsType } from 'antd';
 import { useProductViewedStore } from '@/store/product.viewed.store';
+import ListProduct from '@/components/app.products';
 
 
 interface DataType {
@@ -26,13 +27,13 @@ const columns: TableColumnsType<DataType> = [
     title: 'Tên sản phẩm',
     dataIndex: 'name',
     width: '32%',
-    render: (text, record) => <Link href={`/product/${record.id}`}><span style={{fontWeight: '500', color: '#007aff', cursor: 'pointer', fontSize: '16px'}}>{text}</span></Link>,
+    render: (text, record) => <Link href={`/product/${record.id}`}><span style={{ fontWeight: '500', color: '#007aff', cursor: 'pointer', fontSize: '16px' }}>{text}</span></Link>,
   },
   {
     title: 'Giá',
     dataIndex: 'newPrice',
     width: '18%',
-    render: (text) => <span style={{fontWeight: '500', fontSize: '17px'}}>{(new Intl.NumberFormat('vi-VN').format(text))} đ</span>
+    render: (text) => <span style={{ fontWeight: '500', fontSize: '17px' }}>{(new Intl.NumberFormat('vi-VN').format(text))} đ</span>
   },
   {
     title: 'Số lượng',
@@ -64,19 +65,25 @@ const Cart = () => {
   useEffect(() => {
     useProductViewedStore.persist.rehydrate();
   }, [])
+
   return (
-    <div className={styles.container}>
-      <div className={styles.title}>Giỏ hàng</div>
-      <div className={styles.subTitle}>
-        {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
+    <>
+      <div className={styles.container}>
+        <div className={styles.title}>Giỏ hàng</div>
+        <div className={styles.subTitle}>
+          {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
+        </div>
+        <div>
+          <Table rowSelection={rowSelection} columns={columns} dataSource={productsInCart} />
+        </div>
+        <div className={styles.btnOrder}>
+          <button><Link href="/order">Mua hàng</Link></button>
+        </div>
       </div>
-      <div>
-        <Table rowSelection={rowSelection} columns={columns} dataSource={productsInCart} />
+      <div className={styles.relateProduct}>
+        <ListProduct listProduct={productsInCart} title="CÓ THỂ BẠN CŨNG THÍCH" />
       </div>
-      <div className={styles.btnOrder}>
-        <button><Link href="/order">Mua hàng</Link></button>
-      </div>
-    </div>
+    </>
   )
 }
 
