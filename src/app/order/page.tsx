@@ -1,12 +1,17 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Input } from 'antd'
 import { EnvironmentTwoTone } from '@ant-design/icons'
 import ProductCardHorizontal from '@/components/product/product.card.horizontal'
 import styles from './styles.module.scss'
 import Link from 'next/link'
+import { useProductViewedStore } from '@/store/product.viewed.store'
 
 const OrderPage = () => {
+  useEffect(() => {
+    useProductViewedStore.persist.rehydrate();
+  }, [])
+  const productsInCart = useProductViewedStore(state => state.productsViewed);
   return (
     <>
       {/* address */}
@@ -30,9 +35,7 @@ const OrderPage = () => {
       {/* list order */}
       {/* <div className={styles.container}> */}
       <div className={styles.cards}>
-        <ProductCardHorizontal />
-        <ProductCardHorizontal />
-        <ProductCardHorizontal />
+        {productsInCart?.map((item) => <ProductCardHorizontal key={item.id} product={item} />)}
       </div>
       {/* </div> */}
 
