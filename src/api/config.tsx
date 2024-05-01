@@ -1,18 +1,21 @@
 import { ProductDetail } from "@/types/property.types";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 interface MyResponseData {
-  item: ProductDetail; 
+  item: ProductDetail;
 }
 
 const axiosClient = axios.create();
-
 axiosClient.interceptors.request.use(async (config: AxiosRequestConfig) => {
   config.headers = {
     'Content-type': 'application/json',
     ...config.headers,
   };
+  const access_token = localStorage.getItem('token');
+  if (access_token) {
+    config.headers['Authorization'] = `Bearer ${access_token}`;
+  }
 
-  return config;
+return config;
 });
 
 axiosClient.interceptors.response.use((response: AxiosResponse<MyResponseData>) => {
