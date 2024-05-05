@@ -36,7 +36,7 @@ const ComparePage = ({ product }: { product: ProductDetail }) => {
                 <div
                   onClick={() => removeProductCompare(productsList[0])}
                   className={styles.right}><CloseCircleOutlined /></div>
-                <Image src={item?.images[0]?.link} alt="" />
+                <Image src={item?.images[0]?.url} alt="" />
               </div>
             })}
           </div>
