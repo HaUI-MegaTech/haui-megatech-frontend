@@ -80,12 +80,12 @@ const Cart = () => {
 
   const handleUpdateCartItem = async (e, item) => {
     try {
-      console.log(e);
+      console.log(e, item.id);
       const res = await handleCart.updateItem({
-        cartItemId: item.cartItemId,
-        productId: 16,
+        cartItemId: item.id,
+        productId: item.product.id,
         quantity: e
-      })
+      },)
       if (res) {
         console.log(res);
         handleGetCartItems();
@@ -97,9 +97,9 @@ const Cart = () => {
 
   const handleDeleteCartItems = async () => {
     console.log(selectedRows);
-    const ids = selectedRows.map((item) => item.cartItemId);
+    const ids = selectedRows.map((item) => item.id);
     let data = ids.join(", ");
-    console.log("dt", data);
+    console.log("data", data);
     try {
       const res = await handleCart.deleteItems(data);
       if (res) {
