@@ -98,7 +98,7 @@ const Cart = () => {
   const handleDeleteCartItems = async () => {
     console.log(selectedRows);
     const ids = selectedRows.map((item) => item.id);
-    let data = ids.join(", ");
+    let data = ids.join(",");
     console.log("data", data);
     try {
       const res = await handleCart.deleteItems(data);
