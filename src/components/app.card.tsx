@@ -18,7 +18,7 @@ const AppCard = ({ product }: { product: Product }) => {
       <div className={styles.container}>
         <div className={styles.image}>
           <Image
-            src={product.mainImg ? product.mainImg : ""}
+            src={product.mainImageUrl || ""}
             alt="image"
             width={0}
             height={0}

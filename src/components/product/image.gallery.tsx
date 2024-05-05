@@ -36,7 +36,7 @@ export default function ProductImages({ images }: { images: ImageType[] }) {
           <SwiperSlide key={item.id}>
             <Image
               // width={200}
-              src={item.link}
+              src={item.url}
               alt="image"
             />
           </SwiperSlide>
@@ -56,7 +56,7 @@ export default function ProductImages({ images }: { images: ImageType[] }) {
           <SwiperSlide key={item.id}>
             <Image
               // width={200}
-              src={item.link}
+              src={item.url}
               alt="image"
             />
           </SwiperSlide>

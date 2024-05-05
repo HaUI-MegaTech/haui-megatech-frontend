@@ -14,6 +14,7 @@ import TableRAMInfor from '@/components/product/tableRAM.info'
 import TableMonitorInfor from '@/components/product/tableMonitor.info'
 import { useProductCompareStore } from '@/store/product.compare.store';
 import { useProductViewedStore } from '@/store/product.viewed.store';
+import handleCart from '@/api/cart.request';
 
 const ProductDetailPage = ({ params }: { params: { id: string } }) => {
   const [productInfo, setProductInfo] = useState<ProductDetail>();
@@ -49,6 +50,19 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
       addProductCompare(productInfo);
     }
   }
+  const handleAddToCart = async () => {
+    try {
+      const res = await handleCart.addToCart({
+        productId: productInfo?.id,
+        quantity: 1
+      }) 
+      if (res) {
+        console.log('Thêm thành công');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
   useEffect(() => {
     useProductCompareStore.persist.rehydrate()
     useProductViewedStore.persist.rehydrate()
@@ -61,7 +75,7 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
         </div>
         <div className={styles.content}>
           <div className={styles.contentTop}>
-            <span>Thương hiệu: <span className={styles.brand}>{productInfo?.os}</span></span>
+            <span>Phiên bản: <span className={styles.brand}>{productInfo?.os}</span></span>
             <h1>{productInfo?.name}</h1>
             <div>
               <Rate disabled defaultValue={5} /> (10) | Đã bán: 120
@@ -77,7 +91,7 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
 
             <div className={styles.buttons}>
               <div>
-                <button className={styles.add}>Thêm vào giỏ hàng</button>
+                <button onClick={handleAddToCart} className={styles.add}>Thêm vào giỏ hàng</button>
               </div>
               <div>
                 <button className={styles.buy}>Mua Ngay</button>
@@ -129,8 +143,6 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
           <div className={styles.contentBottom}>
             <div className={styles.titleInfo}>Thông số kỹ thuật</div>
             <TableCPUInfor />
-            <TableRAMInfor />
-            <TableMonitorInfor />
           </div>
         </div>
       </div>
