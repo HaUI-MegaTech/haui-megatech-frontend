@@ -1,17 +1,20 @@
 import { HeartOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Badge, Input } from 'antd';
 import Image from 'next/image';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '@/styles/header.module.scss'
 import logo from '../../public/images/logo.png'
 import Link from 'next/link';
 import { useProductCompareStore } from '@/store/product.compare.store';
+import { useRouter } from 'next/navigation';
 
 const AppHeader = () => {
+  const [search, setSearch] = useState<string>();
   const productsCompare = useProductCompareStore(state => state.products);
   useEffect(() => {
     useProductCompareStore.persist.rehydrate()
   }, [])
+  const router = useRouter();
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
@@ -27,12 +30,12 @@ const AppHeader = () => {
       <div className={styles.search}>
         <div className={styles.title}>Tìm kiếm</div>
         <div className={styles.inputContainer}>
-          <input className={styles.input} placeholder='Nhập tên sản phẩm ...' />
+          <input onChange={(e) => setSearch(e.target.value)} className={styles.input} placeholder='Nhập tên sản phẩm ...' />
         </div>
-        <div className={styles.icon}>
-          <Link href="/search">
-            <SearchOutlined style={{ fontSize: '20px', color: 'gray' }} />
-          </Link>
+        <div
+          onClick={() => router.push(`/search?query=${search}`)}
+          className={styles.icon}>
+          <SearchOutlined style={{ fontSize: '20px', color: 'gray' }} />
         </div>
       </div>
       <div className={styles.actions}>

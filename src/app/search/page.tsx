@@ -3,9 +3,9 @@ import { Button, Checkbox, Col, Divider, Form, InputNumber, Pagination, Rate, Ro
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss'
 import AppCard from '@/components/app.card';
-import { Product } from '@/types/property.types';
+import { ListBrand, Product } from '@/types/property.types';
 import handleProducts from '@/api/user.request';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const SearchPage = () => {
   const items = [
@@ -33,10 +33,12 @@ const SearchPage = () => {
   const [totalItem, setTotalItem] = useState(10);
   const searchParams = useSearchParams();
   const brandId: string | any = searchParams.get('brand');
+  const router = useRouter();
+  const searchTerm = router.query;
   const handleGetProducts = async () => {
     try {
-      const searchQuery = `${brandId}?pageIndex=${pageIndex}&pageSize=${pageSize}`;
-      const res = await handleProducts.getProductsByBrandId(searchQuery);
+      const searchQuery = `?keyword=${searchTerm}&pageIndex=${pageIndex}&pageSize=${pageSize}`;
+      const res = await handleProducts.getProductsByBrandId(brandId, searchQuery);
       if (res) {
         setListProduct1(res.items);
         setTotalItem(res.totalItems);

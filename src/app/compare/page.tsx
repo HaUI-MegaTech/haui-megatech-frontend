@@ -9,13 +9,22 @@ import TableMonitorInfor from '@/components/product/tableMonitor.info'
 import TableRAM from '@/components/product/tableRAM.info'
 import { Image } from 'antd'
 import { CloseCircleOutlined } from '@ant-design/icons'
+import handleProducts from '@/api/user.request'
+import { ProductDetail } from '@/types/property.types'
 
-const ComparePage = () => {
+const ComparePage = ({ product }: { product: ProductDetail }) => {
   const productsList = useProductCompareStore(state => state.products);
   const removeProductCompare = useProductCompareStore(state => state.removeProductInCompare);
   useEffect(() => {
     useProductCompareStore.persist.rehydrate();
   }, []);
+  // const handleGetProductFromOtherWebsites = async () => {
+  //   try {
+  //     const res = await handleProducts.getProductsFromOtherWebsites(product.name);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
   return (
     <div className={styles.container}>
       <div className={styles.top}>
