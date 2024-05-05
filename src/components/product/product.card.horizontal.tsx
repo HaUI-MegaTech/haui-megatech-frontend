@@ -13,7 +13,7 @@ const ProductCardHorizontal = ({ product }: { product: ProductDetail }) => {
           width={100}
           height={100}
           style={{objectFit: 'contain'}}
-          src={product.mainImg} alt="" />
+          src={product?.mainImageUrl ? product?.mainImageUrl : product?.mainImg} alt="" />
       </div>
       <div className={styles.name}>
         <h1>{product.name}</h1>

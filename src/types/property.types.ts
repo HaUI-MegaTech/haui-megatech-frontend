@@ -1,8 +1,9 @@
 export interface Image {
-  link?: string, 
+  url?: string, 
   id?: string
 }
 export interface Product {
+	mainImageUrl?: string,
 	mainImg?: string,
 	battery?: string,
 	card?: string,
@@ -68,4 +69,29 @@ export interface Brand {
 export interface ListProductProps {
   listProduct?: Product[],
 	title?: string
+}
+export interface Province {
+  _id: string
+  name: string
+  slug: string
+  type: string
+  name_with_type: string
+  code: string
+  isDeleted: boolean
+}
+export interface ItemCart {
+  key: number,
+  cartItemId: number,
+  product: {
+    mainImageUrl: string,
+    name: string,
+    currentPrice: number,
+    oldPrice: number
+  };
+  quantity: number;
+}
+export interface ItemAddCart {
+  productId: number,
+  quantity: number,
+  cartItemId?: number
 }
