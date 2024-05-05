@@ -1,6 +1,7 @@
 import axiosClient from "./config"
 
-const BASE_URL = "http://localhost:8080/api/v1/"
+const BASE_URL = process.env.BACKEND_URL;
+console.log(BASE_URL);
 class HandleProducts {
   getProducts = async () => {
     return axiosClient.get(BASE_URL + 'products/active')
@@ -12,7 +13,7 @@ class HandleProducts {
     return axiosClient.get(BASE_URL + 'brands/active')
   }
   getProductsByBrandId = async (id:string, query: string) => {
-    return axiosClient.get(BASE_URL + `brands/${id}/products/active`)
+    return axiosClient.get(BASE_URL + `brands/${id}/products/active${query}`)
   }
   getProductsSearch = async (query: string) => {
     return axiosClient.get(BASE_URL + `products/active?${query}`)

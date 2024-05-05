@@ -1,6 +1,6 @@
 import axiosClient from "./config"
 
-const BASE_URL = "http://localhost:8080/api/v1/"
+const BASE_URL = process.env.BACKEND_URL;
 type FieldType = {
   id: string,
   firstName: string

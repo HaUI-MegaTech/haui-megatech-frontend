@@ -1,7 +1,7 @@
 import { ItemAddCart } from "@/types/property.types"
 import axiosClient from "./config"
 
-const BASE_URL = "http://localhost:8080/api/v1/cart-items"
+const BASE_URL = process.env.BACKEND_URL + 'cart-items'
 
 class HandleCart {
   getCart = async () => {
