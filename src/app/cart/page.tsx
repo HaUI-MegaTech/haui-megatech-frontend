@@ -7,7 +7,10 @@ import type { TableColumnsType } from 'antd';
 import { useProductViewedStore } from '@/store/product.viewed.store';
 import ListProduct from '@/components/app.products';
 import handleCart from '@/api/cart.request';
-import { ItemCart } from '@/types/property.types';
+import handleOrder from '@/api/order.request';
+import { ItemCart, OrderBody } from '@/types/property.types';
+import { Noto_Sans_Wancho } from 'next/font/google';
+import { useCartStore } from '@/store/cart.store';
 
 const Cart = () => {
   const columns: TableColumnsType<ItemCart> = [
@@ -21,7 +24,7 @@ const Cart = () => {
       title: 'Tên sản phẩm',
       dataIndex: 'product',
       width: '32%',
-      render: (text, record) => <Link href={`/product/${record.cartItemId}`}><span style={{ fontWeight: '500', color: '#007aff', cursor: 'pointer', fontSize: '16px' }}>{text.name}</span></Link>,
+      render: (text, record) => <Link href={`/product/${record.id}`}><span style={{ fontWeight: '500', color: '#007aff', cursor: 'pointer', fontSize: '16px' }}>{text.name}</span></Link>,
     },
     {
       title: 'Giá',
@@ -59,6 +62,7 @@ const Cart = () => {
 
   useEffect(() => {
     useProductViewedStore.persist.rehydrate();
+    useCartStore.persist.rehydrate();
     handleGetCartItems();
   }, [])
 
@@ -77,6 +81,7 @@ const Cart = () => {
       console.log(err);
     }
   }
+  const setQuantityProductInCart: () => Promise<void> = useCartStore(state => state.setQuantityInCart);
 
   const handleUpdateCartItem = async (e, item) => {
     try {
@@ -89,6 +94,7 @@ const Cart = () => {
       if (res) {
         console.log(res);
         handleGetCartItems();
+        setQuantityProductInCart();
       }
     } catch (err) {
       console.log(err);
@@ -96,7 +102,6 @@ const Cart = () => {
   }
 
   const handleDeleteCartItems = async () => {
-    console.log(selectedRows);
     const ids = selectedRows.map((item) => item.id);
     let data = ids.join(",");
     console.log("data", data);
@@ -104,6 +109,7 @@ const Cart = () => {
       const res = await handleCart.deleteItems(data);
       if (res) {
         console.log('Xóa thành công');
+        setQuantityProductInCart();
         handleGetCartItems();
       }
     } catch (err) {
@@ -111,6 +117,36 @@ const Cart = () => {
     }
   }
 
+  const handlePlaceOrder = async () => {
+    console.log(selectedRows);
+    const dataOrder = selectedRows.map((item: ItemCart) => {
+      return {
+        productId: item.product.id,
+        quantity: item.quantity
+      }
+    })
+    const data: OrderBody = {
+      token: localStorage.getItem('token'),
+      shippingCost: 12000,
+      subTotal: 1000,
+      tax: 10,
+      total: 100,
+      paymentMethod: "TIEN_MAT",
+      payTime: "2024-05-06T11:24:25.904Z",
+      orderTime: "2024-05-06T11:24:25.904Z",
+      deliverTime: "2024-05-06T11:24:25.904Z",
+      orderWeight: 10,
+      address: "Ha Noi",
+      status: "NEW",
+      orderDetailRequestDTOList: dataOrder
+    }
+    try {
+      const res = await handleOrder.placeOrder(data);
+      if (res) console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <>
       <div className={styles.container}>
@@ -133,7 +169,7 @@ const Cart = () => {
           />
         </div>
         <div className={styles.btnOrder}>
-          <button><Link href="/order">Mua hàng</Link></button>
+          <button onClick={handlePlaceOrder}>Mua hàng</button>
         </div>
       </div>
       <div className={styles.relateProduct}>

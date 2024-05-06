@@ -16,10 +16,12 @@ import { useProductCompareStore } from '@/store/product.compare.store';
 import { useProductViewedStore } from '@/store/product.viewed.store';
 import handleCart from '@/api/cart.request';
 import Link from 'next/link';
+import { useCartStore } from '@/store/cart.store';
 
 const ProductDetailPage = ({ params }: { params: { id: string } }) => {
   const [productInfo, setProductInfo] = useState<ProductDetail>();
   const [arrImg, setArrImg] = useState<Image[]>();
+  const [quantityAddToCart, setQuantityAddToCart] = useState<number>(1);
   const productsViewed = useProductViewedStore(state => state.productsViewed);
 
   const handleGetDetailProduct = async () => {
@@ -38,13 +40,14 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     handleGetDetailProduct();
+    useCartStore.persist.rehydrate();
   }, [])
 
   const addProductCompare = useProductCompareStore(state => state.addProductToCompare);
   const productList = useProductCompareStore(state => state.products);
   // console.log('before', productListCompare);
   const [listCompare, setListCompare] = useState<ProductDetail[]>();
-
+  const setQuantityProductInCart: () => Promise<void> = useCartStore(state => state.setQuantityInCart);
   const handleAddToCompareList = () => {
     console.log(productInfo);
     if (productInfo) {
@@ -55,14 +58,18 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
     try {
       const res = await handleCart.addToCart({
         productId: productInfo?.id,
-        quantity: 1
+        quantity: quantityAddToCart
       })
       if (res) {
         console.log('Thêm thành công');
+        setQuantityProductInCart();
       }
     } catch (err) {
       console.log(err);
     }
+  }
+  const onChangeQuantityAddToCart = (e: number) => {
+    setQuantityAddToCart(e)
   }
   useEffect(() => {
     useProductCompareStore.persist.rehydrate()
@@ -85,9 +92,11 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
 
             <p>Tình trạng: <Tag color="green">còn hàng</Tag></p>
 
-            <div className={styles.quantity}>Số lượng: <InputNumber min={1} max={10} defaultValue={3}
-            // onChange={onChange} 
-            />
+            <div className={styles.quantity}>
+              Số lượng:
+              <InputNumber min={1} max={10} defaultValue={1}
+                onChange={(e) => onChangeQuantityAddToCart(e)}
+              />
             </div>
 
             <div className={styles.buttons}>

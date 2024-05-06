@@ -7,12 +7,17 @@ import logo from '../../public/images/logo.png'
 import Link from 'next/link';
 import { useProductCompareStore } from '@/store/product.compare.store';
 import { useRouter } from 'next/navigation';
+import { useCartStore } from '@/store/cart.store';
 
 const AppHeader = () => {
   const [search, setSearch] = useState<string>();
   const productsCompare = useProductCompareStore(state => state.products);
+  const quantityProdInCart = useCartStore(state => state.quantity);
+  const setQuantityProductInCart: () => Promise<void> = useCartStore(state => state.setQuantityInCart);
   useEffect(() => {
-    useProductCompareStore.persist.rehydrate()
+    useProductCompareStore.persist.rehydrate();
+    useCartStore.persist.rehydrate();
+    setQuantityProductInCart();
   }, [])
   const router = useRouter();
   return (
@@ -41,7 +46,7 @@ const AppHeader = () => {
       <div className={styles.actions}>
         <div className={styles.cart}>
           <Link href="/cart">
-            <Badge count={3} style={{ background: '#007aff' }}>
+            <Badge count={quantityProdInCart} style={{ background: '#007aff' }}>
               <ShoppingCartOutlined style={{ fontSize: '30px' }} />
             </Badge>
             <span>Giỏ hàng</span>

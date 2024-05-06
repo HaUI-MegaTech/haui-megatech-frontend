@@ -82,8 +82,9 @@ export interface Province {
 }
 export interface ItemCart {
   key: number,
-  cartItemId: number,
+  id: number,
   product: {
+    id: number,
     mainImageUrl: string,
     name: string,
     currentPrice: number,
@@ -108,4 +109,26 @@ export interface PageMap {
 export interface CseImage {
   src: string
 }
+
+export interface OrderBody {
+  token: string
+  shippingCost: number
+  subTotal: number
+  tax: number
+  total: number
+  paymentMethod: string
+  payTime: string
+  orderTime: string
+  deliverTime: string
+  orderWeight: number
+  address: string
+  status: string
+  orderDetailRequestDTOList: OrderDetailRequestDtoList[]
+}
+
+export interface OrderDetailRequestDtoList {
+  quantity: number
+  productId: number
+}
+
 
