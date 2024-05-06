@@ -12,14 +12,15 @@ class HandleProducts {
   getListBrands = async () => {
     return axiosClient.get(BASE_URL + 'brands/active')
   }
-  getProductsByBrandId = async (id:string, query: string) => {
-    return axiosClient.get(BASE_URL + `brands/${id}/products/active${query}`)
+  getProductsByBrandId = async (id: string, query: string) => {
+    if (query) return axiosClient.get(BASE_URL + `brands/${id}/products/active${query}`)
+    else return axiosClient.get(BASE_URL + `brands/${id}/products/active`);
   }
   getProductsSearch = async (query: string) => {
     return axiosClient.get(BASE_URL + `products/active?${query}`)
   }
   getProductsFromOtherWebsites = async (query: string) => {
-    return axiosClient.get(`http://localhost:8080/search?keyword=${query}`)
+    return axiosClient.get(BASE_URL + `outer-search?compare=${query}`)
   }
 }
 

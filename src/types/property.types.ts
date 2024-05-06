@@ -1,24 +1,25 @@
 export interface Image {
-  url?: string, 
+  url?: string,
   id?: string
 }
 export interface Product {
-	mainImageUrl?: string,
-	mainImg?: string,
-	battery?: string,
-	card?: string,
-	discountPercent?: string,
-	display?: string,
-	id?: number,
-	name?: string,
-	newPrice?: number,
-	oldPrice?: number,
-	processor?: string,
-	ram?: number,
-	storage?: string,
-	weight?: number,
+  mainImageUrl?: string,
+  mainImg?: string,
+  battery?: string,
+  card?: string,
+  discountPercent?: string,
+  display?: string,
+  id?: number,
+  name?: string,
+  newPrice?: number,
+  oldPrice?: number,
+  processor?: string,
+  ram?: number,
+  storage?: string,
+  weight?: number,
 }
 export interface ProductDetail {
+  id: number,
   backlitKeyboard?: string,
   batteryCapacity?: string,
   boostFrequency?: string,
@@ -58,17 +59,17 @@ export interface ProductDetail {
   wirelessConnectivity?: string,
 }
 export interface ListBrand {
-	key?: string,
-	label?: string,
+  key?: string,
+  label?: string,
 }
 export interface Brand {
-	id?: string,
-	name?: string,
-	image?: string
+  id?: string,
+  name?: string,
+  image?: string
 }
 export interface ListProductProps {
   listProduct?: Product[],
-	title?: string
+  title?: string
 }
 export interface Province {
   _id: string
@@ -95,3 +96,16 @@ export interface ItemAddCart {
   quantity: number,
   cartItemId?: number
 }
+export interface ProductCompare {
+  link: string | 'https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTExL3JtNTUxLTExLW1hY2Jvb2stMTFhLnBuZw.png'
+  title: string
+  pagemap: PageMap
+  price: string
+}
+export interface PageMap {
+  cse_image: CseImage[]
+}
+export interface CseImage {
+  src: string
+}
+

@@ -1,0 +1,16 @@
+.container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  .title {
+    font-size: 25px;
+    font-weight: 500;
+  }
+  .content {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+  }
+}

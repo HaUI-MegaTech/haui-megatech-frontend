@@ -15,6 +15,7 @@ import TableMonitorInfor from '@/components/product/tableMonitor.info'
 import { useProductCompareStore } from '@/store/product.compare.store';
 import { useProductViewedStore } from '@/store/product.viewed.store';
 import handleCart from '@/api/cart.request';
+import Link from 'next/link';
 
 const ProductDetailPage = ({ params }: { params: { id: string } }) => {
   const [productInfo, setProductInfo] = useState<ProductDetail>();
@@ -34,7 +35,7 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
       console.log(err);
     }
   }
-  
+
   useEffect(() => {
     handleGetDetailProduct();
   }, [])
@@ -55,7 +56,7 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
       const res = await handleCart.addToCart({
         productId: productInfo?.id,
         quantity: 1
-      }) 
+      })
       if (res) {
         console.log('Thêm thành công');
       }
@@ -101,6 +102,10 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
               onClick={handleAddToCompareList}
               className={styles.compare}>
               Thêm vào danh sách so sánh
+              <PlusCircleOutlined twoToneColor="green" />
+            </div>
+            <div className={styles.compare}>
+              <Link href={`/compare-with-others?id=${productInfo?.id}`}>So sánh giá với sản phẩm trên website khác</Link>
               <PlusCircleOutlined twoToneColor="green" />
             </div>
           </div>

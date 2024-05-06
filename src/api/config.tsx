@@ -14,8 +14,7 @@ axiosClient.interceptors.request.use(async (config: AxiosRequestConfig) => {
   if (access_token) {
     config.headers['Authorization'] = `Bearer ${access_token}`;
   }
-
-return config;
+  return config;
 });
 
 axiosClient.interceptors.response.use((response: AxiosResponse<MyResponseData>) => {
