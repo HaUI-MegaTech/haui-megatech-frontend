@@ -34,11 +34,11 @@ const SearchPage = () => {
   const searchParams = useSearchParams();
   const brandId: string | any = searchParams.get('brand');
   const router = useRouter();
-  const searchTerm = router.query;
+  const searchTerm = router.query || 'laptop';
   const handleGetProducts = async () => {
     try {
-      const searchQuery = `?keyword=${searchTerm}&pageIndex=${pageIndex}&pageSize=${pageSize}`;
-      const res = await handleProducts.getProductsByBrandId(brandId, searchQuery);
+      const searchQuery = `brandIds=${brandId}&minPrice=0&maxPrice=0&index=${pageIndex}&limit=${pageSize}`;
+      const res = await handleProducts.getActiveProducts(searchQuery);
       if (res) {
         setListProduct1(res.items);
         setTotalItem(res.totalItems);

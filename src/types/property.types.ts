@@ -20,6 +20,7 @@ export interface Product {
 }
 export interface ProductDetail {
   id: number,
+  article: string,
   backlitKeyboard?: string,
   batteryCapacity?: string,
   boostFrequency?: string,
