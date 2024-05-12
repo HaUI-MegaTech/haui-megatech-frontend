@@ -1,6 +1,5 @@
 import axiosClient from "./config"
 
-const BASE_URL = process.env.BACKEND_URL;
 type FieldType = {
   id: string,
   firstName: string
@@ -11,16 +10,16 @@ type FieldType = {
 };
 class HandleAuth {
   registerAccount = async (data: object) => {
-    return axiosClient.post(BASE_URL + 'auth/register', data)
+    return axiosClient.post('auth/register', data)
   }
   login = async (data: object) => {
-    return axiosClient.post(BASE_URL + 'auth/authenticate', data)
+    return axiosClient.post('auth/authenticate', data)
   }
   forgotPassword = async (id: number) => {
-    return axiosClient.patch(BASE_URL + `users/reset-password/${id}`)
+    return axiosClient.patch(`users/reset-password/${id}`)
   }
   updateUserInfor = async (user: FieldType) => {
-    return axiosClient.put(BASE_URL + `users/update-info/1033`, user)
+    return axiosClient.put(`users/update-info/1033`, user)
   }
 }
 
