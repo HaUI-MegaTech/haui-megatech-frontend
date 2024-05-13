@@ -8,6 +8,7 @@ type FieldType = {
   email: string
   phoneNumber: string
 };
+const users = JSON.parse(localStorage.getItem('haui-megatech-user-infor'));
 class HandleAuth {
   registerAccount = async (data: object) => {
     return axiosClient.post('auth/register', data)
@@ -19,7 +20,7 @@ class HandleAuth {
     return axiosClient.patch(`users/reset-password/${id}`)
   }
   updateUserInfor = async (user: FieldType) => {
-    return axiosClient.put(`users/update-info/1033`, user)
+    return axiosClient.put(`users/update-info/${users?.id}`, user)
   }
 }
 
