@@ -60,6 +60,7 @@ export default function Home() {
 		fetchData3();
 		fetchData4();
 		fetchData5();
+    document.title = 'HaUI MegaTech'
 	}, [])
   return (
     <div>

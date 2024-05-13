@@ -12,7 +12,8 @@ type FieldType = {
   firstName?: string;
   lastName?: string;
   password?: string;
-  re_password?: string;
+  confirmPassword?: string;
+  email: string
 };
 
 const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
@@ -22,7 +23,7 @@ const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
 const RegisterPage = () => {
   const router = useRouter();
   const onFinish: FormProps<FieldType>["onFinish"] = async (values: object) => {
-    console.log('Success:', values);
+    console.log(values)
     try {
       let res = await handleAuth.registerAccount(values);
       if (res && res.token) {
@@ -72,6 +73,14 @@ const RegisterPage = () => {
           </Form.Item>
 
           <Form.Item<FieldType>
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: 'Nhập email!' }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item<FieldType>
             label="Mật khẩu"
             name="password"
             rules={[{ required: true, message: 'Nhập mật khẩu!' }]}
@@ -81,7 +90,7 @@ const RegisterPage = () => {
 
           <Form.Item<FieldType>
             label="Nhập lại mật khẩu"
-            name="re_password"
+            name="confirmPassword"
             rules={[
               { required: true, message: 'Nhập lại mật khẩu!' },
               ({ getFieldValue }) => ({

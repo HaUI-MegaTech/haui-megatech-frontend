@@ -64,6 +64,7 @@ const Cart = () => {
     useProductViewedStore.persist.rehydrate();
     useCartStore.persist.rehydrate();
     handleGetCartItems();
+    document.title = 'Giỏ hàng'
   }, [])
 
   const [cartItems, setCartItems] = useState();
@@ -85,7 +86,7 @@ const Cart = () => {
 
   const handleUpdateCartItem = async (e, item) => {
     try {
-      console.log(e, item.id);
+      console.log(e, item);
       const res = await handleCart.updateItem({
         cartItemId: item.id,
         productId: item.product.id,

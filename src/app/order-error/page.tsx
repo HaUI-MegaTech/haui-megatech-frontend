@@ -1,10 +1,14 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react'
 import styles from './styles.module.scss'
 import Image from 'next/image'
 import errorImage from '../../../public/images/error.gif'
 import ListProduct from '@/components/app.products'
 
 const OrderSuccess = () => {
+  useEffect(() => {
+    document.title = 'Lỗi đặt hàng'
+  }, [])
   return (
     <>
       <div className={styles.container}>

@@ -42,6 +42,7 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     handleGetDetailProduct();
     useCartStore.persist.rehydrate();
+    document.title = 'Chi tiết sản phẩm'
   }, [])
 
   const addProductCompare = useProductCompareStore(state => state.addProductToCompare);
@@ -57,6 +58,7 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
   }
   const handleAddToCart = async () => {
     try {
+      console.log(productInfo.id, quantityAddToCart);
       const res = await handleCart.addToCart({
         productId: productInfo?.id,
         quantity: quantityAddToCart
@@ -115,7 +117,7 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
               <PlusCircleOutlined twoToneColor="green" />
             </div>
             <div className={styles.compare}>
-              <Link href={`/compare-with-others?id=${productInfo?.id}`}>So sánh giá với sản phẩm trên website khác</Link>
+              <Link style={{textDecoration: 'none', color: 'black'}} href={`/compare-with-others?id=${productInfo?.id}`}>So sánh giá với sản phẩm trên website khác</Link>
               <PlusCircleOutlined twoToneColor="green" />
             </div>
           </div>

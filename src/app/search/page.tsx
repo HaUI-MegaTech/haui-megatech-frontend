@@ -52,6 +52,7 @@ const SearchPage = () => {
   }
   useEffect(() => {
     handleGetProducts();
+    document.title = 'Tìm kiếm'
   }, [searchParams, pageIndex, pageSize])
 
   const [listBrand, setListBrand] = useState<ListBrand[]>([]);

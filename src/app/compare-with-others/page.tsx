@@ -27,6 +27,7 @@ const CompareProductWithOtherWebs = () => {
   }
   useEffect(() => {
     handleGetProduct();
+    document.title = 'So sánh giá'
   }, [])
   return (
     <div className={styles.container}>

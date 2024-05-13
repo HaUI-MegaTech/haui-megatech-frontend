@@ -17,6 +17,7 @@ const ComparePage = ({ product }: { product: ProductDetail }) => {
   const removeProductCompare = useProductCompareStore(state => state.removeProductInCompare);
   useEffect(() => {
     useProductCompareStore.persist.rehydrate();
+    document.title = 'So sánh sản phẩm'
   }, []);
   // const handleGetProductFromOtherWebsites = async () => {
   //   try {

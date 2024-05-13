@@ -13,7 +13,6 @@ import {
 import Image from 'next/image'
 import handleAuth from '@/api/auth.request';
 type FieldType = {
-  id: string,
   firstName: string
   lastName: string
   avatar: string
@@ -21,6 +20,7 @@ type FieldType = {
   phoneNumber: string
 };
 const UserInfo = () => {
+  document.title = 'Thông tin người dùng'
   const onFinish: FormProps<FieldType>["onFinish"] = async (values: FieldType) => {
     console.log('Success:', values);
     try {

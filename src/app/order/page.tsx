@@ -10,6 +10,7 @@ import { useProductViewedStore } from '@/store/product.viewed.store'
 const OrderPage = () => {
   useEffect(() => {
     useProductViewedStore.persist.rehydrate();
+    document.title = 'Đặt hàng'
   }, [])
   const productsInCart = useProductViewedStore(state => state.productsViewed);
   return (

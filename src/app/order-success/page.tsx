@@ -11,13 +11,14 @@ const OrderSuccess = () => {
   
   const [listProduct1, setListProduct1] = useState<Product[]>([]);
   const fetchData1 = async () => {
-    const res = await fetch("http://localhost:8080/api/v1/products?pageIndex=1");
+    const res = await fetch("http://localhost:8080/api/v1/products/active?pageIndex=1");
     const data = await res.json();
     console.log(data.items);
     setListProduct1(data.items);
   }
   useEffect(() => {
     fetchData1();
+    document.title = 'Đặt hàng thành công'
   }, [])
   return (
     <>
