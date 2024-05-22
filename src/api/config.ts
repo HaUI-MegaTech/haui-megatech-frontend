@@ -15,10 +15,10 @@ axiosClient.interceptors.request.use(async (config: AxiosRequestConfig) => {
     'Content-type': 'application/json',
     ...config.headers,
   };
-  // const access_token = localStorage.getItem('token');
-  // if (!!access_token) {
-  //   config.headers['Authorization'] = `Bearer ${access_token}`;
-  // }
+  const access_token = localStorage.getItem('token');
+  if (!!access_token) {
+    config.headers['Authorization'] = `Bearer ${access_token}`;
+  }
   return config;
 });
 
@@ -26,9 +26,10 @@ axiosClient.interceptors.response.use((response: AxiosResponse<MyResponseData>) 
   if (response.status === 200 && response.data) {
     return response.data;
   }
-
   return response;
 }, error => {
+  if (error.config && error.response && +error.response.status === 401) {
+  }
   console.warn(`Lỗi kết nối đến cơ sở dữ liệu, ${error.message}`);
   return Promise.reject(error);
 });

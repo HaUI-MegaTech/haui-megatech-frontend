@@ -8,7 +8,7 @@ type FieldType = {
   email: string
   phoneNumber: string
 };
-const users = JSON.parse(localStorage.getItem('haui-megatech-user-infor'));
+// const users = localStorage.getItem('haui-megatech-user-infor') ? JSON.parse(localStorage.getItem('haui-megatech-user-infor')) : {};
 class HandleAuth {
   registerAccount = async (data: object) => {
     return axiosClient.post('auth/register', data)
