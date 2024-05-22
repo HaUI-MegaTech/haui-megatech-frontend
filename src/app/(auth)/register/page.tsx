@@ -27,7 +27,7 @@ const RegisterPage = () => {
     try {
       let res = await handleAuth.registerAccount(values);
       if (res && res.token) {
-        console.log(res);
+        localStorage.setItem('token', res.token);
         router.push('/');
       }
     } catch (err) {
