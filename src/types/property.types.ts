@@ -18,8 +18,7 @@ export interface Product {
   storage?: string,
   weight?: number,
 }
-export interface ProductDetail {
-  id: number,
+export type ProductDetail = Product & {
   article: string,
   backlitKeyboard?: string,
   batteryCapacity?: string,
@@ -35,7 +34,6 @@ export interface ProductDetail {
   displaySize?: string,
   frequency?: string,
   graphicsCard?: string,
-  id?: number,
   images?: Array<Image>,
   launchDate?: number,
   material?: string,
@@ -44,8 +42,6 @@ export interface ProductDetail {
   memoryCapacity?: string,
   memoryType?: string,
   miscFeature?: string,
-  name?: string,
-  oldPrice?: number,
   os?: string,
   panelType?: string,
   processor?: string,
@@ -58,6 +54,8 @@ export interface ProductDetail {
   touchScreen?: string,
   webcam?: string,
   wirelessConnectivity?: string,
+  averageRating: number,
+  feedbacksCount: number,
 }
 export interface ListBrand {
   key?: string,
@@ -81,16 +79,10 @@ export interface Province {
   code: string
   isDeleted: boolean
 }
-export interface ItemCart {
+export type ItemCart = {
   key: number,
   id: number,
-  product: {
-    id: number,
-    mainImageUrl: string,
-    name: string,
-    currentPrice: number,
-    oldPrice: number
-  };
+  product: Product
   quantity: number;
 }
 export interface ItemAddCart {
@@ -132,4 +124,10 @@ export interface OrderDetailRequestDtoList {
   productId: number
 }
 
-
+export interface Feedback {
+  id: number
+  alias: string
+  content: string
+  rating: number
+  whenCreated: string
+}
