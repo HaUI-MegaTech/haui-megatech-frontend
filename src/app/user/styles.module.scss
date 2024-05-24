@@ -4,7 +4,7 @@
   padding: 50px 0;
 
   .left {
-    width           : 18%;
+    width           : 20%;
     background-color: #fff;
     padding         : 20px 30px;
     border-radius   : 20px;
@@ -26,6 +26,7 @@
 
       .avatar {
         border-radius: 50%;
+        border: 2px solid #007aff;
         object-fit   : cover;
       }
 
@@ -117,6 +118,7 @@
 
         .imageUser {
           border-radius: 50%;
+          border: 5px solid #007aff;
           object-fit   : cover;
         }
 
