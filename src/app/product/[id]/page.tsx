@@ -18,9 +18,11 @@ import handleCart from '@/api/cart.request';
 import Link from 'next/link';
 import { useCartStore } from '@/store/cart.store';
 import toast, { Toaster } from 'react-hot-toast';
+import handleFeedback from '@/api/feedback.request';
 
 const ProductDetailPage = ({ params }: { params: { id: string } }) => {
   const [productInfo, setProductInfo] = useState<ProductDetail>();
+  const [feedback, setFeedback] = useState<Feedback[]>();
   const [arrImg, setArrImg] = useState<Image[]>();
   const [quantityAddToCart, setQuantityAddToCart] = useState<number>(1);
   const productsViewed = useProductViewedStore(state => state.productsViewed);
@@ -31,8 +33,21 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
       if (res) {
         let data = res.item;
         console.log(data);
+        if (data.id) {
+          await handleGetFeedback(data.id)
+        }
         setProductInfo(data);
         setArrImg(data.images);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const handleGetFeedback = async (id: number) => {
+    try {
+      let res = await handleFeedback.getFeedbackByProductId(id);
+      if (res) {
+        setFeedback(res.items);
       }
     } catch (err) {
       console.log(err);
@@ -51,7 +66,6 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
   const [listCompare, setListCompare] = useState<ProductDetail[]>();
   const setQuantityProductInCart: () => Promise<void> = useCartStore(state => state.setQuantityInCart);
   const handleAddToCompareList = () => {
-    console.log(productInfo);
     if (productInfo) {
       addProductCompare(productInfo);
     }
@@ -86,12 +100,21 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
         </div>
         <div className={styles.content}>
           <div className={styles.contentTop}>
-            <span>Hãng: <span className={styles.brand}><Link style={{textDecoration: 'none'}} href={`/search?brand=${productInfo?.brand.id}`}>{productInfo?.brand.name}</Link></span></span>
+            <span>Hãng: <span className={styles.brand}><Link style={{ textDecoration: 'none' }} href={`/search?brand=${productInfo?.brand.id}`}>{productInfo?.brand.name}</Link></span></span>
             <h1>{productInfo?.name}</h1>
             <div>
-              <Rate disabled defaultValue={5} /> (10) | Đã bán: 120
+              <Rate disabled value={Number(productInfo?.averageRating.toFixed(1))} /> ({productInfo?.feedbacksCount}) | Đã bán: {productInfo?.totalSold}
             </div>
-            <div className={styles.price}>{(new Intl.NumberFormat('vi-VN').format(productInfo?.currentPrice))}đ</div>
+            <div className={styles.price}>
+              <span>{(new Intl.NumberFormat('vi-VN').format(productInfo?.currentPrice))}đ</span>
+              {/* {
+                productInfo?.discountPercent > 0
+                  ?
+                  <div className={styles.discount}><span>-{productInfo?.discountPercent}</span></div>
+                  :
+                  null
+              } */}
+            </div>
 
             <p>Tình trạng: <Tag color="green">còn hàng</Tag></p>
 
@@ -117,7 +140,7 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
               <PlusCircleOutlined twoToneColor="green" />
             </div>
             <div className={styles.compare}>
-              <Link style={{textDecoration: 'none', color: 'black'}} href={`/compare-with-others?id=${productInfo?.id}`}>So sánh giá với sản phẩm trên website khác</Link>
+              <Link style={{ textDecoration: 'none', color: 'black' }} href={`/compare-with-others?id=${productInfo?.id}`}>So sánh giá với sản phẩm trên website khác</Link>
               <PlusCircleOutlined twoToneColor="green" />
             </div>
           </div>
@@ -148,8 +171,8 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
         <div className={styles.overviewContainer}>
           <p>Tổng quan</p>
           <div className={styles.rateTotal}>
-            4.4 <Rate className={styles.rateDetail} allowHalf defaultValue={4.5} />
-            <p className={styles.numberOfReviews}>(31 đánh giá)</p>
+            {productInfo?.averageRating.toFixed(1)} <Rate className={styles.rateDetail} allowHalf value={Number(productInfo?.averageRating)} />
+            <p className={styles.numberOfReviews}>({productInfo?.feedbacksCount} đánh giá)</p>
           </div>
           <table className={styles.tableOverview}>
             <tbody>
@@ -182,11 +205,11 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
           </table>
         </div>
         <div>
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
+          {
+            feedback?.map((item) => {
+              return <ReviewCard key={item.id} feedback={item}/>
+            })
+          }
         </div>
       </div>
       <div className={styles.relateProduct}>
