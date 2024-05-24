@@ -11,7 +11,7 @@
 	.userContainer {
 		display: flex;
 		gap    : 10px;
-		width  : 35%;
+		width  : 30%;
 
 		@media screen and (max-width: 600px) {
 			width    : 100%;
@@ -36,6 +36,7 @@
 	}
 
 	.reviewContainer {
+		width: 70%;
 		.rate {
 			.rateDetail {
 				@media screen and (max-width: 600px) {
