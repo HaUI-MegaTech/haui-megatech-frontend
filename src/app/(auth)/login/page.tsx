@@ -23,9 +23,9 @@ const LoginPage = () => {
     console.log('Success:', values);
     try {
       let res = await handleAuth.login(values);
-      if (res && res.token) {
-        console.log(res);
-        localStorage.setItem('token', res.token);
+      if (res) {
+        console.log('ok')
+        localStorage.setItem('token', res.accessToken);
         localStorage.setItem('haui-megatech-user-infor', JSON.stringify(res.loggedInUser));
         router.push('/')
       }
