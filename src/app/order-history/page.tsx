@@ -1,9 +1,12 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react'
 import styles from './styles.module.scss'
 import ProductCardHorizontal from '@/components/product/product.card.horizontal'
 
 const OrderHistory = () => {
-  document.title = 'Lịch sử đặt hàng'
+  useEffect(() => {
+    document.title = 'Lịch sử đặt hàng'
+  })
   return (
     <div className={styles.container}>
       <div>Lịch sử đơn hàng</div>

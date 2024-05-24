@@ -28,8 +28,6 @@ axiosClient.interceptors.response.use((response: AxiosResponse<MyResponseData>) 
   }
   return response;
 }, error => {
-  if (error.config && error.response && +error.response.status === 401) {
-  }
   console.warn(`Lỗi kết nối đến cơ sở dữ liệu, ${error.message}`);
   return Promise.reject(error);
 });
