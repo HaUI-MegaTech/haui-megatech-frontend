@@ -4,11 +4,11 @@ class HandleAddress {
   getAllProvinces = async () => {
     return axiosClient.get('provinces')
   }
-  getAllDistrictsByProvinces = async (code : number) => {
-    return axiosClient.get(`provinces/${code}/districts`)
+  getAllDistrictsByProvinces = async (code : string) => {
+    return axiosClient.get(`provinces/${parseInt(code)}/districts`)
   }
-  getAllWardsByDistricts = async (codeProvince : number, codeDistrict : number) => {
-    return axiosClient.get(`provinces/${codeProvince}/districts/${codeDistrict}/wards`)
+  getAllWardsByDistricts = async (codeProvince : string, codeDistrict : string) => {
+    return axiosClient.get(`provinces/${parseInt(codeProvince)}/districts/${parseInt(codeDistrict)}/wards`)
   }
 }
 
