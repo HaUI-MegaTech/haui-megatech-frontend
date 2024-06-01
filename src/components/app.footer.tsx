@@ -14,7 +14,7 @@ const AppFooter = () => {
     try {
       let res: any = await handleProducts.getListBrands();
       if (res) {
-        setListBrand(res.items);
+        setListBrand(res.data);
       }
     } catch (err) {
       console.log(err);
@@ -24,7 +24,7 @@ const AppFooter = () => {
   useEffect(() => {
     handleGetListBrands();
   }, [])
-  
+
   return (
     <div>
       <div className={styles.container}>

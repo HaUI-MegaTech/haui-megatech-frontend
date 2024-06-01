@@ -56,8 +56,10 @@ const UserInfo = () => {
   };
   const onFinish: FormProps<FieldType>["onFinish"] = async (values: FieldType) => {
     console.log('Success:', values);
+    const user = localStorage.getItem('haui-megatech-user-infor') ? JSON.parse(localStorage.getItem('haui-megatech-user-infor')) : {};
+    console.log('user ', user);
     try {
-      let res = await handleAuth.updateUserInfor(values);
+      let res = await handleAuth.updateUserInfor(values, user.id);
       if (res) {
         console.log(res);
       }
@@ -79,8 +81,8 @@ const UserInfo = () => {
     try {
       const res: any = await handleAddress.getAllProvinces();
       if (res) {
-        console.log(res.items);
-        let provinceArr = res.items.map((item : any) => {
+        console.log(res.data);
+        let provinceArr = res.data.map((item: any) => {
           return {
             value: item.code,
             label: item.name
@@ -102,7 +104,14 @@ const UserInfo = () => {
     try {
       const res: any = await handleAddress.getAllDistrictsByProvinces(codeProvince);
       if (res) {
-        console.log(res.items);
+        console.log(res.data);
+        let provinceArr = res.data.map((item: any) => {
+          return {
+            value: item.code,
+            label: item.name
+          }
+        });
+        setDistricts(provinceArr);
       }
     } catch (e) {
       console.log(e);
@@ -116,7 +125,14 @@ const UserInfo = () => {
     try {
       const res: any = await handleAddress.getAllWardsByDistricts(codeProvince, codeDistrict);
       if (res) {
-        console.log(res.items);
+        console.log(res.data);
+        let provinceArr = res.data.map((item: any) => {
+          return {
+            value: item.code,
+            label: item.name
+          }
+        });
+        setWards(provinceArr);
       }
     } catch (e) {
       console.log(e);
@@ -199,7 +215,7 @@ const UserInfo = () => {
                   onChange={handleChangeProvince}
                   options={provinces}
                 >
-                  <Select.Option value={userInfomation.addresses[0].provinceCode}>{userInfomation.addresses[0].province}</Select.Option>
+                  <Select.Option value="Hà Nội">Hà Nội</Select.Option>
                 </Select>
               </Form.Item>
               <Form.Item label="Quận/huyện">
@@ -208,7 +224,7 @@ const UserInfo = () => {
                   onChange={handleChangeDistrict}
                   options={districts}
                 >
-                  <Select.Option value={userInfomation.addresses[0].districtCode}>{userInfomation.addresses[0].district}</Select.Option>
+                  <Select.Option value="Hà Nội">Hà Nội</Select.Option>
                 </Select>
               </Form.Item>
               <Form.Item label="Xã">
@@ -217,7 +233,7 @@ const UserInfo = () => {
                   onChange={handleChangeWard}
                   options={wards}
                 >
-                  <Select.Option value={userInfomation.addresses[0].warCode}>{userInfomation.addresses[0].ward}</Select.Option>
+                  <Select.Option value="Hà Nội">Hà Nội</Select.Option>
                 </Select>
               </Form.Item>
               <Form.Item label="Địa chỉ">

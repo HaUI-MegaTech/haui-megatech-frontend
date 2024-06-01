@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { Rate } from 'antd'
 import { ProductDetail } from '@/types/property.types';
 
-const ProductCardHorizontal = (product: ProductDetail) => {
+const ProductCardHorizontal = ({ product }: { product: ProductDetail }) => {
   return (
     <div className={styles.card}>
       <div>

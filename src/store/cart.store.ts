@@ -16,9 +16,9 @@ export const useCartStore = create<CartType>()(
         setQuantityInCart: async () => {
           try {
             const res = await handleCart.getCart();
-            if (res) 
+            if (res)
               set({
-                quantity: res.items.length
+                quantity: res.data.length
               })
           } catch (err) {
             console.log(err);

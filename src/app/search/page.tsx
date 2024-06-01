@@ -8,14 +8,19 @@ import handleProducts from '@/api/user.request';
 import { useRouter, useSearchParams } from 'next/navigation';
 enum SortBy {
   TOTAL_SOLD = 'totalSold',
-  UPDATED_AT = 'updatedAt',
-  PRICE = 'price',
-  DECREASE_PRICE = '-price'
+  UPDATED_AT = 'lastUpdated',
+  PRICE = 'currentPrice',
+  DECREASE_PRICE = 'decrease_price',
+  TOTAL_VIEW = 'totalViews'
 }
 const SearchPage = () => {
   const items = [
     {
       key: SortBy.TOTAL_SOLD,
+      label: 'Bán chạy',
+    },
+    {
+      key: SortBy.TOTAL_VIEW,
       label: 'Phổ biến',
     },
     {
@@ -35,24 +40,41 @@ const SearchPage = () => {
   const searchParams = useSearchParams();
   const brand: string | any = searchParams.get('brand');
   const [brandIds, setBrandIds] = useState<string>(brand);
-  const [pageIndex, setPageIndex] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(16);
-  const [sortBy, setSortBy] = useState<string>('-totalSold');
+  useEffect(() => {
+    setRequestSearch({
+      ...requestSearch,
+      brandIds: brandIds
+    })
+    console.log(requestSearch);
+  }, [searchParams])
+  const searchString: string | any = searchParams.get('query') || '';
+  const [keyword, setKeyword] = useState<string>(searchString);
   const [fromPrice, setFromPrice] = useState(0);
   const [toPrice, setToPrice] = useState(30000000);
+  const [requestSearch, setRequestSearch] = useState({
+    index: pageIndex,
+    limit: 16,
+    brandIds: brandIds,
+    minPrice: fromPrice,
+    maxPrice: toPrice
+  })
+  const [pageIndex, setPageIndex] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(16);
+  const [sortBy, setSortBy] = useState<string>('totalSold');
   const [orderBy, setOrderBy] = useState('asc')
-  const [query, setQuery] = useState<string>(`brandIds=${brandIds}&index=${pageIndex}&limit=${pageSize}&field=${sortBy}&minPrice=${fromPrice}&maxPrice=${toPrice}&direction=${orderBy}`);
+  const [query, setQuery] = useState<string>(`keyword=${keyword}&index=${pageIndex}&limit=${pageSize}&fields=${sortBy}&direction=${orderBy}`);
   const [totalItem, setTotalItem] = useState(10);
 
   //const router = useRouter()
-  //const searchTerm = router.query || 'laptop';
+  // const searchTerm = router.query || 'laptop';
   const handleGetProducts = async () => {
     try {
-      setQuery(`brandIds=${brandIds}&index=${pageIndex}&limit=${pageSize}&field=${sortBy}&minPrice=${fromPrice}&maxPrice=${toPrice}&direction=${orderBy}`);
-      const res: any = await handleProducts.getActiveProducts(query);
+      setQuery(`keyword=${keyword}&index=${pageIndex}&limit=${pageSize}&fields=${sortBy}&direction=${orderBy}`);
+      const res: any = await handleProducts.getActiveProducts(query, requestSearch);
       if (res) {
-        setListProduct1(res.items);
-        setTotalItem(res.totalItems);
+        setListProduct1(res.data);
+        console.log('item: ', res.data);
+        setTotalItem(res.meta.pagination.totalItems);
       }
     } catch (err) {
       console.log(err);
@@ -64,14 +86,14 @@ const SearchPage = () => {
   useEffect(() => {
     handleGetProducts();
     document.title = 'Tìm kiếm'
-  }, [pageIndex, pageSize, sortBy])
+  }, [pageIndex, pageSize, sortBy, orderBy, brandIds])
 
   const [listBrand, setListBrand] = useState<Brand[]>([]);
   const handleGetListBrands = async () => {
     try {
       let res: any = await handleProducts.getListBrands();
       if (res) {
-        setListBrand(res.items);
+        setListBrand(res.data);
       }
     } catch (err) {
       console.log(err);
@@ -84,15 +106,20 @@ const SearchPage = () => {
         setSortBy(SortBy.TOTAL_SOLD);
         setOrderBy('desc');
         break;
+      case SortBy.TOTAL_VIEW:
+        setSortBy(SortBy.TOTAL_VIEW);
+        setOrderBy('desc');
+        break;
       case SortBy.UPDATED_AT:
         setSortBy(SortBy.UPDATED_AT);
         setOrderBy('desc');
         break;
       case SortBy.PRICE:
+        setOrderBy('asc');
         setSortBy(SortBy.PRICE);
         break;
       case SortBy.DECREASE_PRICE:
-        setSortBy(SortBy.DECREASE_PRICE);
+        setSortBy(SortBy.PRICE);
         setOrderBy('desc');
         break;
     }
@@ -100,10 +127,19 @@ const SearchPage = () => {
   const onChangeForm = (changedVal: any, values: any) => {
     if (!!changedVal?.category) {
       setBrandIds(values.category.join(','));
+      setRequestSearch({
+        ...requestSearch,
+        brandIds: brandIds
+      })
     }
     if (!!changedVal.range) {
       setFromPrice(values.range.from);
       setToPrice(values.range.to);
+      setRequestSearch({
+        ...requestSearch,
+        minPrice: fromPrice,
+        maxPrice: toPrice
+      })
     }
   }
   const handleApplyForm = async () => {
