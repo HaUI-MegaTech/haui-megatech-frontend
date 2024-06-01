@@ -16,9 +16,9 @@ const CompareProductWithOtherWebs = () => {
       const res = await handleProducts.getProductById(productId);
       if (res) {
         console.log(res);
-        const res2 = await handleProducts.getProductsFromOtherWebsites(res.item?.name);
+        const res2 = await handleProducts.getProductsFromOtherWebsites(res.data?.name);
         if (res2) {
-          setProduct(res2.items);
+          setProduct(res2.data);
         }
       }
     } catch (err) {

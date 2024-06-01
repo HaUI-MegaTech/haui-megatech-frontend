@@ -13,6 +13,7 @@ const OrderPage = () => {
     document.title = 'Đặt hàng'
   }, [])
   const productsInCart = useProductViewedStore(state => state.productsViewed);
+  console.log(productsInCart);
   const [showModalChangeAddress, setShowModalChangeAddress] = useState(false);
   const handleChangeAddress = () => {
     setShowModalChangeAddress(true);

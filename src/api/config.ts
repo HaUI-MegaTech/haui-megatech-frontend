@@ -3,7 +3,6 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 interface MyResponseData {
   item: ProductDetail;
 }
-
 const baseUrl = process.env.BACKEND_URL;
 
 const axiosClient = axios.create({

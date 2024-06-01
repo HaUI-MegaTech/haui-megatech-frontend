@@ -26,12 +26,12 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
   const [arrImg, setArrImg] = useState<Image[]>();
   const [quantityAddToCart, setQuantityAddToCart] = useState<number>(1);
   const productsViewed = useProductViewedStore(state => state.productsViewed);
-
+  const [listProductCompare, setListProductCompare] = useState([])
   const handleGetDetailProduct = async () => {
     try {
       let res = await handleProducts.getProductById(params.id);
       if (res) {
-        let data = res.item;
+        let data = res.data;
         console.log(data);
         if (data.id) {
           await handleGetFeedback(data.id)
@@ -47,7 +47,7 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
     try {
       let res = await handleFeedback.getFeedbackByProductId(id);
       if (res) {
-        setFeedback(res.items);
+        setFeedback(res.data);
       }
     } catch (err) {
       console.log(err);
@@ -207,7 +207,7 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
         <div>
           {
             feedback?.map((item) => {
-              return <ReviewCard key={item.id} feedback={item}/>
+              return <ReviewCard key={item.id} feedback={item} />
             })
           }
         </div>

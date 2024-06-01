@@ -70,9 +70,9 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState();
   const handleGetCartItems = async () => {
     try {
-      const res : any = await handleCart.getCart();
+      const res: any = await handleCart.getCart();
       if (res) {
-        const updatedCartItems = res.items.map((item : ItemCart) => ({
+        const updatedCartItems = res.data.map((item: ItemCart) => ({
           ...item,
           key: item.id, // Thêm trường "key" với giá trị là index
         }));
