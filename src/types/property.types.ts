@@ -91,9 +91,10 @@ export interface ItemAddCart {
   cartItemId?: number
 }
 export interface ProductCompare {
-  link: string | 'https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTExL3JtNTUxLTExLW1hY2Jvb2stMTFhLnBuZw.png'
-  title: string
-  pagemap: PageMap
+  id: number,
+  productName: string,
+  productImageUrl: string,
+  productUrl: string,
   price: string
 }
 export interface PageMap {
@@ -125,6 +126,14 @@ export interface OrderDetailRequestDtoList {
 }
 
 export interface Feedback {
+  id: number
+  alias: string
+  content: string
+  rating: number
+  whenCreated: string
+}
+
+export interface Feedback2 {
   id: number
   alias: string
   content: string

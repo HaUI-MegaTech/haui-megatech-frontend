@@ -24,9 +24,8 @@ const LoginPage = () => {
     try {
       let res = await handleAuth.login(values);
       if (res) {
-        console.log('ok')
-        localStorage.setItem('token', res.accessToken);
-        localStorage.setItem('haui-megatech-user-infor', JSON.stringify(res.loggedInUser));
+        localStorage.setItem('token', res.data.accessToken);
+        localStorage.setItem('haui-megatech-user-infor', JSON.stringify(res.data.loggedInUser));
         router.push('/')
       }
     } catch (err) {
@@ -36,7 +35,7 @@ const LoginPage = () => {
 
   const handleForgetPassword = async () => {
     try {
-      const res = await handleAuth.forgotPassword(1033);
+      const res = await handleAuth.forgotPassword(1044);
       if (res) console.log(res);
     } catch (err) {
       console.log(err);

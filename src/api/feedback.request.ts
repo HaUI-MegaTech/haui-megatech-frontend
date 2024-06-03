@@ -5,7 +5,7 @@ class HandleFeedback {
     return axiosClient.get(`products/${id}/feedbacks`)
   }
   getFeedbackByUserId = async (id: number) => {
-    return axiosClient.get(`users/${id}/feedback`)
+    return axiosClient.get(`users/${id}/feedbacks`)
   }
   postFeedBack = async (id: number) => {
     return axiosClient.get(`products/${id}/feedback`)
@@ -13,7 +13,7 @@ class HandleFeedback {
   putFeedback = async (productId: number, feedbackId: number) => {
     return axiosClient.get(`products/${productId}/feedbacks/${feedbackId}`)
   }
-}
+} 
 
 const handleFeedback = new HandleFeedback()
 

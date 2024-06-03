@@ -3,21 +3,18 @@
 import handleProducts from '@/api/user.request';
 import ListProduct from '@/components/app.products';
 import ReviewCard from '@/components/product/review.card';
-import { Image, Product, ProductDetail } from '@/types/property.types';
+import { Feedback, Image, ProductDetail } from '@/types/property.types';
 import React, { useEffect, useState } from 'react'
 import ProductImages from '@/components/product/image.gallery'
 import styles from "../styles.module.scss"
-import { InputNumber, Progress, Rate, Tag } from 'antd'
-import { CheckCircleTwoTone, DollarTwoTone, HeartOutlined, PlusCircleOutlined, RollbackOutlined } from '@ant-design/icons'
+import { InputNumber, Progress, Rate, Tag, notification } from 'antd'
+import { CheckCircleTwoTone, DollarTwoTone, PlusCircleOutlined, RollbackOutlined } from '@ant-design/icons'
 import TableCPUInfor from '@/components/product/tableCPU.info'
-import TableRAMInfor from '@/components/product/tableRAM.info'
-import TableMonitorInfor from '@/components/product/tableMonitor.info'
 import { useProductCompareStore } from '@/store/product.compare.store';
 import { useProductViewedStore } from '@/store/product.viewed.store';
 import handleCart from '@/api/cart.request';
 import Link from 'next/link';
 import { useCartStore } from '@/store/cart.store';
-import toast, { Toaster } from 'react-hot-toast';
 import handleFeedback from '@/api/feedback.request';
 
 const ProductDetailPage = ({ params }: { params: { id: string } }) => {
@@ -26,13 +23,11 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
   const [arrImg, setArrImg] = useState<Image[]>();
   const [quantityAddToCart, setQuantityAddToCart] = useState<number>(1);
   const productsViewed = useProductViewedStore(state => state.productsViewed);
-  const [listProductCompare, setListProductCompare] = useState([])
   const handleGetDetailProduct = async () => {
     try {
       let res = await handleProducts.getProductById(params.id);
       if (res) {
         let data = res.data;
-        console.log(data);
         if (data.id) {
           await handleGetFeedback(data.id)
         }
@@ -53,7 +48,6 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
       console.log(err);
     }
   }
-  const notify = (message: string) => toast(message);
   useEffect(() => {
     handleGetDetailProduct();
     useCartStore.persist.rehydrate();
@@ -62,7 +56,6 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
 
   const addProductCompare = useProductCompareStore(state => state.addProductToCompare);
   const productList = useProductCompareStore(state => state.products);
-  // console.log('before', productListCompare);
   const [listCompare, setListCompare] = useState<ProductDetail[]>();
   const setQuantityProductInCart: () => Promise<void> = useCartStore(state => state.setQuantityInCart);
   const handleAddToCompareList = () => {
@@ -70,15 +63,20 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
       addProductCompare(productInfo);
     }
   }
+  const openNotification = (message: string) => {
+    notification.open({
+      message: 'Thông báo',
+      description: `${message}`,
+    });
+  };
   const handleAddToCart = async () => {
     try {
-      console.log(productInfo.id, quantityAddToCart);
       const res = await handleCart.addToCart({
         productId: productInfo?.id,
         quantity: quantityAddToCart
       })
       if (res) {
-        notify('Thêm sản phẩm vào giỏ hàng thành công')
+        openNotification('Thêm sản phẩm vào giỏ hàng thành công')
         setQuantityProductInCart();
       }
     } catch (err) {
@@ -107,13 +105,6 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
             </div>
             <div className={styles.price}>
               <span>{(new Intl.NumberFormat('vi-VN').format(productInfo?.currentPrice))}đ</span>
-              {/* {
-                productInfo?.discountPercent > 0
-                  ?
-                  <div className={styles.discount}><span>-{productInfo?.discountPercent}</span></div>
-                  :
-                  null
-              } */}
             </div>
 
             <p>Tình trạng: <Tag color="green">còn hàng</Tag></p>

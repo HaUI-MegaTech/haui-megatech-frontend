@@ -1,6 +1,6 @@
 'use client'
 import { Button, Checkbox, Col, Divider, Form, InputNumber, Pagination, Rate, Row, Spin, Tabs } from 'antd'
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './styles.module.scss'
 import AppCard from '@/components/app.card';
 import { Brand, ListBrand, Product } from '@/types/property.types';
@@ -45,12 +45,12 @@ const SearchPage = () => {
       ...requestSearch,
       brandIds: brandIds
     })
-    console.log(requestSearch);
-  }, [searchParams])
+  }, [])
   const searchString: string | any = searchParams.get('query') || '';
   const [keyword, setKeyword] = useState<string>(searchString);
   const [fromPrice, setFromPrice] = useState(0);
   const [toPrice, setToPrice] = useState(30000000);
+  const [pageIndex, setPageIndex] = useState<number>(0);
   const [requestSearch, setRequestSearch] = useState({
     index: pageIndex,
     limit: 16,
@@ -58,22 +58,23 @@ const SearchPage = () => {
     minPrice: fromPrice,
     maxPrice: toPrice
   })
-  const [pageIndex, setPageIndex] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(16);
   const [sortBy, setSortBy] = useState<string>('totalSold');
   const [orderBy, setOrderBy] = useState('asc')
   const [query, setQuery] = useState<string>(`keyword=${keyword}&index=${pageIndex}&limit=${pageSize}&fields=${sortBy}&direction=${orderBy}`);
   const [totalItem, setTotalItem] = useState(10);
 
-  //const router = useRouter()
-  // const searchTerm = router.query || 'laptop';
   const handleGetProducts = async () => {
     try {
+      console.log({requestSearch});
       setQuery(`keyword=${keyword}&index=${pageIndex}&limit=${pageSize}&fields=${sortBy}&direction=${orderBy}`);
+      setRequestSearch(prev => ({
+        ...prev,
+        brandIds: brandIds
+      }))
       const res: any = await handleProducts.getActiveProducts(query, requestSearch);
       if (res) {
         setListProduct1(res.data);
-        console.log('item: ', res.data);
         setTotalItem(res.meta.pagination.totalItems);
       }
     } catch (err) {
@@ -86,7 +87,7 @@ const SearchPage = () => {
   useEffect(() => {
     handleGetProducts();
     document.title = 'Tìm kiếm'
-  }, [pageIndex, pageSize, sortBy, orderBy, brandIds])
+  }, [pageIndex, pageSize, sortBy, orderBy, query])
 
   const [listBrand, setListBrand] = useState<Brand[]>([]);
   const handleGetListBrands = async () => {
@@ -100,7 +101,6 @@ const SearchPage = () => {
     }
   }
   const handleFilterProductsByProperty = (key: string) => {
-    console.log(key);
     switch (key) {
       case SortBy.TOTAL_SOLD:
         setSortBy(SortBy.TOTAL_SOLD);
@@ -124,22 +124,13 @@ const SearchPage = () => {
         break;
     }
   }
-  const onChangeForm = (changedVal: any, values: any) => {
-    if (!!changedVal?.category) {
+  const onChangeForm = async (changedVal: any, values: any) => {
+    if (changedVal?.category) {
       setBrandIds(values.category.join(','));
-      setRequestSearch({
-        ...requestSearch,
-        brandIds: brandIds
-      })
     }
-    if (!!changedVal.range) {
+    if (changedVal.range) {
       setFromPrice(values.range.from);
       setToPrice(values.range.to);
-      setRequestSearch({
-        ...requestSearch,
-        minPrice: fromPrice,
-        maxPrice: toPrice
-      })
     }
   }
   const handleApplyForm = async () => {

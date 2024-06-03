@@ -12,7 +12,6 @@ class HandleProducts {
   }
   getActiveProducts = async (query: string, request: object) => {
     if (query) {
-      console.log('request', request, query);
       return axiosClient.get(`products/active?${query}`, {
         params: request
       })
@@ -35,6 +34,12 @@ class HandleProducts {
   }
   deleteUserAddress = async (userId: number, addressId: number) => {
     return axiosClient.delete(`users/${userId}/addresses/${addressId}`)
+  }
+  getListOrder = async () => {
+    return axiosClient.get(`orders`)
+  }
+  getDetailOrder = async (orderId: number) => {
+    return axiosClient.get(`orders/detail/${orderId}`)
   }
 }
 

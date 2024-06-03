@@ -14,7 +14,7 @@ export default function Home() {
   const [listProduct5, setListProduct5] = useState<Product[]>([]);
 	const fetchData1 = async () => {
 		try {
-			let res = await handleProducts.getActiveProducts("brandIds=1&minPrice=0&maxPrice=0");
+			let res = await handleProducts.getActiveProducts("brandIds=1&minPrice=0&maxPrice=30000000", {});
 			if (res && res.data) setListProduct1(res.data);
 		} catch (err) {
 			console.log(err);
@@ -22,8 +22,7 @@ export default function Home() {
 	}
   const fetchData2 = async () => {
 		try {
-			let res = await handleProducts.getActiveProducts("brandIds=2&minPrice=0&maxPrice=0");
-
+			let res = await handleProducts.getActiveProducts("brandIds=2&minPrice=0&maxPrice=30000000", {});
 			if (res && res.data) setListProduct2(res.data);
 		} catch (err) {
 			console.log(err);
@@ -31,8 +30,7 @@ export default function Home() {
 	}
   const fetchData3 = async () => {
 		try {
-			let res = await handleProducts.getActiveProducts("brandIds=3&minPrice=0&maxPrice=0");
-
+			let res = await handleProducts.getActiveProducts("brandIds=3&minPrice=0&maxPrice=30000000", {});
 			if (res && res.data) setListProduct3(res.data);
 		} catch (err) {
 			console.log(err);
@@ -40,7 +38,7 @@ export default function Home() {
 	}
   const fetchData4 = async () => {
 		try {
-			let res = await handleProducts.getActiveProducts("brandIds=4&minPrice=0&maxPrice=0");
+			let res = await handleProducts.getActiveProducts("brandIds=4&minPrice=0&maxPrice=30000000", {});
 			if (res && res.data) setListProduct4(res.data);
 		} catch (err) {
 			console.log(err);
@@ -48,8 +46,7 @@ export default function Home() {
 	}
   const fetchData5 = async () => {
 		try {
-			let res = await handleProducts.getActiveProducts("brandIds=5&minPrice=0&maxPrice=0");
-
+			let res = await handleProducts.getActiveProducts("brandIds=5&minPrice=0&maxPrice=30000000", {});
 			if (res && res.data) setListProduct5(res.data);
 		} catch (err) {
 			console.log(err);
