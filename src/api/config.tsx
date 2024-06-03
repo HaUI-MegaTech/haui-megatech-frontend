@@ -15,10 +15,10 @@ axiosClient.interceptors.request.use(async (config: AxiosRequestConfig) => {
     'Content-type': 'application/json',
     ...config.headers,
   };
-  // const access_token = localStorage.getItem('token');
-  // if (!!access_token) {
-  //   config.headers['Authorization'] = `Bearer ${access_token}`;
-  // }
+  const access_token = localStorage.getItem('token');
+  if (!!access_token) {
+    config.headers['Authorization'] = `Bearer ${access_token}`;
+  }
   return config;
 });
 
