@@ -160,7 +160,7 @@ const UserInfo = () => {
       <div className={styles.left}>
         <div className={styles.leftTop}>
           <div>
-            <Image className={styles.avatar} width={50} height={50} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaBOsBWLrWjZqh1wdvYYD0ooORXZGrEG9gqhiuLh3f6A&s" alt="" />
+            <Image className={styles.avatar} width={50} height={50} src={userInfomation.avatarImageUrl} alt="" />
           </div>
           <div className={styles.leftTopRight}>
             Tài khoản của <br />
@@ -183,9 +183,9 @@ const UserInfo = () => {
         <div className={styles.rightContent}>
           <div className={styles.basicInfo}>
             <div>
-              <Image className={styles.imageUser} width={200} height={200} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaBOsBWLrWjZqh1wdvYYD0ooORXZGrEG9gqhiuLh3f6A&s" alt="" />
+              <Image className={styles.imageUser} width={200} height={200} src={userInfomation.avatarImageUrl} alt="" />
             </div>
-            <div className={styles.name}>Lương Minh Anh</div>
+            <div className={styles.name}>{`${userInfomation.firstName} ${userInfomation.lastName}`}</div>
           </div>
           <div className={styles.form}>
             <Form
