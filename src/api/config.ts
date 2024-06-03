@@ -3,7 +3,6 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 interface MyResponseData {
   item: ProductDetail;
 }
-
 const baseUrl = process.env.BACKEND_URL;
 
 const axiosClient = axios.create({
@@ -26,7 +25,6 @@ axiosClient.interceptors.response.use((response: AxiosResponse<MyResponseData>) 
   if (response.status === 200 && response.data) {
     return response.data;
   }
-
   return response;
 }, error => {
   console.warn(`Lỗi kết nối đến cơ sở dữ liệu, ${error.message}`);

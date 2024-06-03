@@ -12,13 +12,13 @@ const baloo = Baloo_2({
 	subsets: ["vietnamese"],
 })
 
-const ListProduct : React.FC<ListProductProps> = ({ listProduct, title }) => {
+const ListProduct: React.FC<ListProductProps> = ({ listProduct, title }) => {
 	const [listBrand, setListBrand] = useState<ListBrand[]>([]);
 	const handleGetListBrands = async () => {
 		try {
 			let res: any = await handleProducts.getListBrands();
 			if (res) {
-				let arr = res.items;
+				let arr = res.data;
 				const brands = arr.map((item: Brand) => {
 					return ({
 						key: item.id,

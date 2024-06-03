@@ -12,12 +12,12 @@ const ProductCardHorizontal = ({ product }: { product: ProductDetail }) => {
         <Image
           width={100}
           height={100}
-          style={{objectFit: 'contain'}}
+          style={{ objectFit: 'contain' }}
           src={product?.mainImageUrl ? product?.mainImageUrl : product?.mainImg} alt="" />
       </div>
       <div className={styles.name}>
         <h1>{product.name}</h1>
-        <Rate count={5} className={styles.rate}/>
+        <Rate count={5} className={styles.rate} />
       </div>
       <div><b>Giá:</b> <span style={{ color: '#007aff' }}>{(new Intl.NumberFormat('vi-VN').format(product.newPrice))} đ</span></div>
       <div>

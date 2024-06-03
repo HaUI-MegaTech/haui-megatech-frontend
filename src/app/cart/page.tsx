@@ -1,16 +1,16 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import styles from './styles.module.scss'
-import { Button, Image, Input, InputNumber, Table } from 'antd';
+import { Button, Image, InputNumber, Table } from 'antd';
 import Link from 'next/link';
 import type { TableColumnsType } from 'antd';
 import { useProductViewedStore } from '@/store/product.viewed.store';
 import ListProduct from '@/components/app.products';
 import handleCart from '@/api/cart.request';
-import handleOrder from '@/api/order.request';
-import { ItemCart, OrderBody } from '@/types/property.types';
-import { Noto_Sans_Wancho } from 'next/font/google';
+import { ItemCart } from '@/types/property.types';
 import { useCartStore } from '@/store/cart.store';
+import handlePayment from '@/api/payment.request';
+import { useRouter } from 'next/navigation';
 
 const Cart = () => {
   const columns: TableColumnsType<ItemCart> = [
@@ -46,9 +46,9 @@ const Cart = () => {
   ];
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
   const [selectedRows, setSelectedRows] = useState<ItemCart[]>([]);
+  const router = useRouter();
 
   const onSelectChange = (newSelectedRowKeys: number[], selectedRows: ItemCart[]) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys, selectedRows);
     setSelectedRowKeys(newSelectedRowKeys);
     setSelectedRows(selectedRows);
   };
@@ -64,16 +64,17 @@ const Cart = () => {
     useProductViewedStore.persist.rehydrate();
     useCartStore.persist.rehydrate();
     handleGetCartItems();
+    document.title = 'Giỏ hàng'
   }, [])
 
   const [cartItems, setCartItems] = useState();
   const handleGetCartItems = async () => {
     try {
-      const res = await handleCart.getCart();
+      const res: any = await handleCart.getCart();
       if (res) {
-        const updatedCartItems = res.items.map((item, index) => ({
+        const updatedCartItems = res.data.map((item: ItemCart) => ({
           ...item,
-          key: index, // Thêm trường "key" với giá trị là index
+          key: item.id, // Thêm trường "key" với giá trị là index
         }));
         setCartItems(updatedCartItems);
       }
@@ -83,9 +84,9 @@ const Cart = () => {
   }
   const setQuantityProductInCart: () => Promise<void> = useCartStore(state => state.setQuantityInCart);
 
-  const handleUpdateCartItem = async (e, item) => {
+  const handleUpdateCartItem = async (e: any, item: ItemCart) => {
     try {
-      console.log(e, item.id);
+      console.log(e, item);
       const res = await handleCart.updateItem({
         cartItemId: item.id,
         productId: item.product.id,
@@ -104,7 +105,7 @@ const Cart = () => {
   const handleDeleteCartItems = async () => {
     const ids = selectedRows.map((item) => item.id);
     let data = ids.join(",");
-    console.log("data", data);
+    console.log({data});
     try {
       const res = await handleCart.deleteItems(data);
       if (res) {
@@ -120,29 +121,16 @@ const Cart = () => {
   const handlePlaceOrder = async () => {
     console.log(selectedRows);
     const dataOrder = selectedRows.map((item: ItemCart) => {
-      return {
-        productId: item.product.id,
-        quantity: item.quantity
-      }
+      return item.id
     })
-    const data: OrderBody = {
-      token: localStorage.getItem('token'),
-      shippingCost: 12000,
-      subTotal: 1000,
-      tax: 10,
-      total: 100,
-      paymentMethod: "TIEN_MAT",
-      payTime: "2024-05-06T11:24:25.904Z",
-      orderTime: "2024-05-06T11:24:25.904Z",
-      deliverTime: "2024-05-06T11:24:25.904Z",
-      orderWeight: 10,
-      address: "Ha Noi",
-      status: "NEW",
-      orderDetailRequestDTOList: dataOrder
-    }
+    let data = dataOrder.join(',')
+    console.log(data);
+    // localStorage.setItem('haui-megatech-order-list', JSON.stringify(dataOrder));
     try {
-      const res = await handleOrder.placeOrder(data);
-      if (res) console.log(res);
+      const res: any = await handlePayment.createPayment(data);
+      if (res && res.success === true) {
+        router.push(res.url);
+      }
     } catch (err) {
       console.log(err);
     }

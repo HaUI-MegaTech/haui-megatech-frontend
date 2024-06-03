@@ -1,13 +1,15 @@
 import axiosClient from "./config"
 
 type FieldType = {
-  id: string,
-  firstName: string
-  lastName: string
-  avatar: string
-  email: string
-  phoneNumber: string
+  id?: string,
+  firstName?: string
+  lastName?: string
+  avatar?: string
+  email?: string
+  phoneNumber?: string
 };
+// const users = localStorage.getItem('haui-megatech-user-infor') ? JSON.parse(localStorage.getItem('haui-megatech-user-infor')) : {};
+
 class HandleAuth {
   registerAccount = async (data: object) => {
     return axiosClient.post('auth/register', data)
@@ -18,8 +20,8 @@ class HandleAuth {
   forgotPassword = async (id: number) => {
     return axiosClient.patch(`users/reset-password/${id}`)
   }
-  updateUserInfor = async (user: FieldType) => {
-    return axiosClient.put(`users/update-info/1033`, user)
+  updateUserInfor = async (user: FieldType, userId: number) => {
+    return axiosClient.put(`users/update-info/${userId}`, user)
   }
 }
 

@@ -19,12 +19,12 @@ const MenuCategories = () => {
 		try {
 			let res: any = await handleProducts.getListBrands();
 			if (res) {
-				let arr = res.items;
+				let arr = res.data;
 				const brands = arr.map((item: Brand) => {
 					return ({
 						key: item.id,
 						label: (
-							<Link style={{textDecoration: 'none'}} href={`/search?brand=${item.id}`}><span style={{ padding: '20px 0' }}>{item.name}</span ></Link>
+							<Link style={{ textDecoration: 'none' }} href={`/search?brand=${item.id}`}><span style={{ padding: '20px 0' }}>{item.name}</span ></Link>
 						)
 					})
 				})
