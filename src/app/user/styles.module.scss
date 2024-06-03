@@ -56,10 +56,16 @@
           margin      : 0 auto;
           padding-left: 0;
           cursor      : pointer;
+          color: black;
 
           &:hover {
             color     : #007aff;
             transition: all ease 0.3s;
+          }
+          a {
+            &:hover {
+              color: #007aff !important;
+            }
           }
         }
       }

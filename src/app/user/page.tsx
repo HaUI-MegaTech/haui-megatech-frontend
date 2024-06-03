@@ -11,6 +11,7 @@ import handleAuth from '@/api/auth.request';
 import handleAddress from '@/api/address.request';
 import { Image, Upload } from 'antd';
 import type { GetProp, UploadFile, UploadProps } from 'antd';
+import Link from 'next/link';
 
 type FieldType = {
   firstName: string
@@ -170,11 +171,10 @@ const UserInfo = () => {
         <div className={styles.leftBottom}>
           <ul>
             <li>Thông tin tài khoản</li>
-            <li>Quản lý đơn hàng</li>
-            <li>Sổ địa chỉ</li>
-            <li>Đánh giá sản phẩm</li>
-            <li>Sản phẩm bạn đã xem</li>
-            <li>Sản phẩm yêu thích</li>
+            <li><Link style={{color: 'black', textDecoration: 'none'}} href='/order-history'>Quản lý đơn hàng</Link></li>
+            <li style={{color: 'gray'}}>Sổ địa chỉ</li>
+            <li><Link style={{color: 'black', textDecoration: 'none'}} href='/review-history'>Đánh giá sản phẩm</Link></li>
+            <li><Link style={{color: 'black', textDecoration: 'none'}} href='/compare'>Danh sách so sánh</Link></li>
           </ul>
         </div>
       </div>
