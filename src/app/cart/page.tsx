@@ -128,9 +128,7 @@ const Cart = () => {
     // localStorage.setItem('haui-megatech-order-list', JSON.stringify(dataOrder));
     try {
       const res: any = await handlePayment.createPayment(data);
-      if (res && res.success === true) {
-        console.log(res.success);
-        console.log(router);
+      if (res && res.meta.success === true) {
         router.push(res.url);
       }
     } catch (err) {

@@ -1,7 +1,7 @@
 import axiosClient from "./config"
 
 class HandlePayment {
-  createPayment = async (data) => {
+  createPayment = async (data: string) => {
     return axiosClient.post(`create-payment?ids=${data}&addressId=28`);
   }
   callbackPayment = async () => {
